@@ -1,0 +1,7 @@
+git status
+git add .
+git commit -m "#name"
+git pull origin "#NameOfBranch"
+git push origin "#NameOfBranch"
+git reset #NameOfFile
+git clone #Url
