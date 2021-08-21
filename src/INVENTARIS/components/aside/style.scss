@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+
+.navigation-action{
+    padding: 20px;
+   
+   
+}
+.logo{
+    position: absolute;
+    top: 14px;
+    right: 27%;
+}
+.app{
+    height: 100vh;
+    display: flex;
+    position: relative;
+}
+
+.block{
+    display: flex;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #545454;
+    >span {
+        margin-left: 12px;
+    }
+}
+
+.pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu .pro-inner-list-item .pro-inner-item::before {
+    display: none !important;
+    margin-left: 10px;
+}
+
+.iconMenu{
+    margin-right: 10px;
+    
+}
+.navigasi{
+    cursor: pointer;
+    margin-left: 5px;
+ 
+}
+.textmenu{
+    margin-left: 20px;
+    font-size: 25px;
+   
+    
+}
+
+.btnMenu{
+    background-color: black !important;
+}
+
+
+.iconSubMenu{
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 16px;
+
+}
+
+.content-container{
+    margin-top: 70px;
+    background-color: #eeeeee;
+    width: 100%;
+}
