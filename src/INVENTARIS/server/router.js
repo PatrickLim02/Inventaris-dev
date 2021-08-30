@@ -6,6 +6,7 @@ var cabang = require('./routes/Cabang')
 var department = require('./routes/department')
 var user = require('./routes/user')
 var vendor = require('./routes/vendor')
+var login = require('./routes/Login')
 
 var tokenGenerator = require('./routes/TokenGenerator')
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -21,11 +22,12 @@ app.use((req, res, next) => {
 })
 
 
-app.use('/accesstoken', tokenGenerator)
+app.use('/tokengenerator', tokenGenerator)
 app.use('/cabang', cabang) // Pakai file cabang.js untuk handle endpoint /cabang
-app.use('/department', department) // Pakai file cabang.js untuk handle endpoint /department
-app.use('/user', user) // Pakai file cabang.js untuk handle endpoint /user
-app.use('/vendor', vendor) // Pakai file cabang.js untuk handle endpoint /vendor
+app.use('/department', department) 
+app.use('/user', user) 
+app.use('/vendor', vendor) 
+app.use('/login', login) 
 
 
 

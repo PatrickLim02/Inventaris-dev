@@ -8,12 +8,12 @@ router
     .route('/')
     .post((req, res) =>{
         //mock user data
+        console.log('body: ', req.body)
         const user = {
-            id:1,
-            username: 'patrick',
-            email: 'patricklim@gmail.com'
+            username: req.body.username,
+            password: req.body.password
         }
-        jwt.sign({user}, 'secretkey', (err, token) =>{
+        jwt.sign({user}, 'secretkey', (err, token) =>{ // 'secretkey' dipakai di setiap endpoint yang mau pakai access token
             res.status(200).json({
                 token // send generated token to clients
             })

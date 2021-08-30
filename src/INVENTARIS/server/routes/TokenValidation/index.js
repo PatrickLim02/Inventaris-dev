@@ -1,6 +1,6 @@
 module.exports = function(req, res, next){
     // get aut header value
-    const bearerHeader = req.headers['x-access-token']
+    const bearerHeader = req.headers['x-access-token'] //diambil dari router.js
     //check if bearer is undefined
     if(typeof bearerHeader !== 'undefined'){
         const bearer = bearerHeader.split(' '); // Memisahkan bearer dengan token
