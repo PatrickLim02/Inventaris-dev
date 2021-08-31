@@ -60,20 +60,15 @@ const Aside = (props) => {
                             <div className="logo">
                                 <span className="textmenu">INVENTARIS</span>
                             </div>
-
-
-
                         </div>
                     </SidebarHeader>
                 }
 
                 <SidebarContent>
                     <Menu iconShape="round">
-
                         <MenuItem icon={<MdDashboard />} suffix={<span className="badge red"></span>}>
                             <Link to="/dashboard"> Dashboard </Link>
                         </MenuItem>
-
                         <SubMenu
                             icon={<FaFileArchive />}
                             suffix={<span className="badge yellow"></span>}

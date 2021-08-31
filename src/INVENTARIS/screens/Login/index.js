@@ -19,7 +19,9 @@ function LoginScreen(props) {
         getAccessToken(params).then(async (res) => {
             setAuthorization({ data: res.token })
             localStorage.setItem('token', res.token)
-
+            if (res.token) {
+                history.push('/home')
+            }
         })
             .catch((err) => {
                 console.log('Failed to request token', err)
@@ -27,24 +29,16 @@ function LoginScreen(props) {
     }
 
     const handleLogin = async () => {
-        handleToken()
         const params = {
             username: username,
             password: password
         }
-        const token = localStorage.getItem('token')
-        if (token) {
-            const loginResponse = await loginUser(params)
-            if (loginResponse.status === 200) {
-                history.push('/home')
-            }
-            else {
-                alert(loginResponse)
-            }
-        }
-        else {
-            alert('Login Gagal')
-        }
+        loginUser(params).then((res) => {
+            handleToken()
+        })
+            .catch((err) => {
+                alert(err.data.message)
+            })
     }
 
     return (
