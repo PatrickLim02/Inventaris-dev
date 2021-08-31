@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken')
 const verifyToken = require('../TokenValidation')
 
 router
-    .route('/') //endpoint /cabang
+    .route('/') //endpoint /login
     .post(verifyToken, (req, res) => {
         var username = req.body.username
         var password = req.body.password

@@ -6,12 +6,15 @@ import LoginScreen from '../Login'
 import Sidebar from '../../../INVENTARIS'
 
 function Navigations() {
+    const token = localStorage.getItem('token')
     return (
         <Router>
-            <Route exact path="/" component={LoginScreen} />
+            <Route exact path="/" component={token ? Sidebar : LoginScreen} />
             <Route path="/login" component={LoginScreen} />
-            <Route path="/home" component= {Sidebar}/>
+            <Route path="/home" component={Sidebar} />
         </Router>
+
+
     )
 }
 
