@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "cryptr": "^6.0.2",
     "firebase": "^8.7.1",
+    "jwt-check-expiration": "^1.0.5",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-cookie": "^4.0.3",

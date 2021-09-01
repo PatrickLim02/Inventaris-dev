@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     ProSidebar,
     Menu,
@@ -9,7 +9,7 @@ import {
     SidebarFooter
 } from 'react-pro-sidebar'
 import {
-    Link, useHistory, BrowserRouter as Router, Route
+    Link, useHistory, BrowserRouter as Router, Route, HashRouter
 } from 'react-router-dom'
 import './style.scss'
 import Switch from 'react-switch'
@@ -48,8 +48,16 @@ const Aside = (props) => {
         props.setAside({ visible: visiblesidebar ? false : true })
 
     }
+
+    const token = localStorage.getItem('token')
+    useEffect(() => {
+        if (!token){
+           window.location.href = "http://localhost:3000"
+        }
+
+    },[token])
     return (
-        <Router>
+        <HashRouter>
             <ProSidebar image={SidebarImg} collapsed={!visiblesidebar}>
                 {!visiblesidebar ? null :
                     <SidebarHeader>
@@ -67,7 +75,7 @@ const Aside = (props) => {
                 <SidebarContent>
                     <Menu iconShape="round">
                         <MenuItem icon={<MdDashboard />} suffix={<span className="badge red"></span>}>
-                            <Link to="/dashboard"> Dashboard </Link>
+                            <a href="/dashboard"> Dashboard </a>
                         </MenuItem>
                         <SubMenu
                             icon={<FaFileArchive />}
@@ -208,8 +216,8 @@ const Aside = (props) => {
             </ProSidebar>
 
             <div className="content-container">
-                <Route exact path={'/'} component={Dashboard} />
-                <Route path={'/dashboard'} component={Dashboard} />
+            
+                <Route exact path={'/dashboard'} component={Dashboard} />
                 <Route path={'/inventaris'} component={Inventaris} />
                 <Route path={'/cabang-list'} component={Cabang_List} />
                 <Route path={'/cabang-create/:types'} component={Cabang_Form} />
@@ -229,7 +237,7 @@ const Aside = (props) => {
             </div>
 
 
-        </Router>
+        </HashRouter>
     )
 }
 

@@ -10,7 +10,7 @@ function Dashboard() {
                     { name: 'Dashboard' },
                 ]
             } />
-            <div> Dashboard </div>
+            <div> Screen Dashboard </div>
         </div>
     )
 }

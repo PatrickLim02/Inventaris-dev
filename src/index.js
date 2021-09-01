@@ -7,10 +7,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import ReduxProvider from './reduxProvider'
+import UploadFoto from './uploadFoto';
 import FirebaseDatabase from './firebaseDatabase'
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider />
+    <UploadFoto />
   </React.StrictMode>,
   document.getElementById('root')
 );

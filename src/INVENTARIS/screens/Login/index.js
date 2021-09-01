@@ -6,6 +6,8 @@ import { setAuthorization } from '../../redux'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import LoginIcon from '../../assets/login.png'
+import Sidebar from '../../../INVENTARIS'
+
 function LoginScreen(props) {
     const history = useHistory()
     const { setAuthorization } = props
@@ -20,7 +22,7 @@ function LoginScreen(props) {
             setAuthorization({ data: res.token })
             localStorage.setItem('token', res.token)
             if (res.token) {
-                history.push('/home')
+                history.push('/dashboard')
             }
         })
             .catch((err) => {
@@ -41,6 +43,14 @@ function LoginScreen(props) {
             })
     }
 
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        if (token){
+            history.push('/dashboard')
+        }
+
+    },[token])
     return (
         <div>
             <div className="container">

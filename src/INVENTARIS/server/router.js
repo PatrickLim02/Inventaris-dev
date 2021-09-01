@@ -7,8 +7,9 @@ var department = require('./routes/department')
 var user = require('./routes/user')
 var vendor = require('./routes/vendor')
 var login = require('./routes/Login')
-
+var multer = require('multer')
 var tokenGenerator = require('./routes/TokenGenerator')
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use((req, res, next) => {
@@ -28,8 +29,19 @@ app.use('/department', department)
 app.use('/user', user) 
 app.use('/vendor', vendor) 
 app.use('/login', login) 
+var storageFile = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        cb(null, './images')
+    },
+    filename: (req,file,cb)=>{
+        cb(null, Date.now() + file.originalname)
+    }
+})
+var uploads = multer({storage: storageFile})
 
-
+app.post('/simpan-foto', uploads.single('fileImage'),(req,res)=>{
+    console.log('berhasil simpan data ke local')
+})
 
 app.listen(8000, (req, res) => {
     console.log('Server is Running on Port 8000')

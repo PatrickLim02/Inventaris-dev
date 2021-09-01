@@ -4,14 +4,21 @@ import {
 } from 'react-router-dom'
 import LoginScreen from '../Login'
 import Sidebar from '../../../INVENTARIS'
-
+import {isJwtExpired} from 'jwt-check-expiration'
 function Navigations() {
+    
     const token = localStorage.getItem('token')
-    return (
+    if (token){
+        console.log('isExpired is:', isJwtExpired(token));
+    }
+    
+   
+
+    return (    
         <Router>
-            <Route exact path="/" component={token ? Sidebar : LoginScreen} />
+            <Route exact path="/" component={ LoginScreen} />
             <Route path="/login" component={LoginScreen} />
-            <Route path="/home" component={Sidebar} />
+            <Route path="/dashboard" component={Sidebar} />
         </Router>
 
 
