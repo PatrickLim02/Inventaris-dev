@@ -6,9 +6,9 @@ import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'
 import firebase from '../../../firebaseAPI'
 import { setUser, fetchUserFromBackEndToRedux } from '../../redux'
-import { deleteUser, getUserLimit, getSearchUser } from '../../helpers/requestUser'
+import { deleteUser, getUserLimit, getSearchUser } from '../../helpers/requestEmployee'
 import { CgUserList } from 'react-icons/cg'
-function UserList(props) {
+function EmployeeList(props) {
     const [entries, setEntries] = useState('')
     const { setUser, userList, cabangList, departmentList } = props;
     const [valueLimit, setValueLimit] = useState(5)
@@ -99,7 +99,7 @@ function UserList(props) {
                         </select>
 
                         <button>
-                            <Link to={'/user-create/create'}>Create</Link>
+                            <Link to={'/employee-create/create'}>Create</Link>
                         </button>
                     </div>
 
@@ -137,7 +137,7 @@ function UserList(props) {
                                         </td>
                                         <td>
                                             <button>
-                                                <Link to={'/user-edit/edit/' + item.id}>
+                                                <Link to={'/employee-edit/edit/' + item.id}>
                                                     Edit
                                                 </Link>
                                             </button>
@@ -168,4 +168,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { setUser, fetchUserFromBackEndToRedux })(UserList)
+export default connect(mapStateToProps, { setUser, fetchUserFromBackEndToRedux })(EmployeeList)

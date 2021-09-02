@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import './styles.scss'
-import {getUserDetail} from '../../../helpers/requestUser'
+import {getUserDetail} from '../../../helpers/requestEmployee'
 import { setDepartment, setCabang } from '../../../redux'
-function FormDepartment_Edit(props) {
+function FormEmployee_Edit(props) {
     const {id, departmentList, cabangList, handleSubmitFirebase} = props
     const [kodeUser, setKodeUser] = useState('')
     const [namaUser, setNamaUser] = useState('')
@@ -124,4 +124,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {setDepartment, setCabang}) (FormDepartment_Edit);
+export default connect(mapStateToProps, {setDepartment, setCabang}) (FormEmployee_Edit);

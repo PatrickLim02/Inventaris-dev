@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import './styles.scss'
 import { setDepartment, setCabang } from '../../../redux'
 import firebase from '../../../../firebaseAPI'
-function FormUser_Create(props) {
+function FormEmployee_Create(props) {
     const { handleSubmitFirebase, cabangList, departmentList } = props
     const [kodeUser, setKodeUser] = useState('')
     const [namaUser, setNamaUser] = useState('')
@@ -104,4 +104,4 @@ const mapStateToProps = (state) => {
         cabangList: state.generalReducer.cabang.data
     }
 }
-export default connect(mapStateToProps, { setDepartment, setCabang })(FormUser_Create)
+export default connect(mapStateToProps, { setDepartment, setCabang })(FormEmployee_Create)

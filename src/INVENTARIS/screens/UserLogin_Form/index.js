@@ -3,18 +3,17 @@ import { connect } from 'react-redux'
 import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import { useHistory } from 'react-router-dom'
-import FormUser_Create from '../../components/Form/FormUser_Create'
-import FormUser_Edit from '../../components/Form/FormUser_Edit'
+import FormUserLogin_Create from '../../components/Form/FormUserLogin_Create'
+import FormUserLogin_Edit from '../../components/Form/FormUserLogin_Edit'
 import {fetchUserFromBackEndToRedux} from '../../redux'
-import  {createUser, editUser} from '../../helpers/requestUser'
-function UserForm(props) {
+import  {createUserLogin, editUser} from '../../helpers/requestUserLogin'
+function UserLoginForm(props) {
     const { types, id } = props.match.params; //Harus sama dengan yang di router
     const direct = useHistory();
  
     const create = async (datas) => {
-        createUser(datas).then((res) =>{
+        createUserLogin(datas).then((res) =>{
             alert(res.message)
-            props.fetchUserFromBackEndToRedux()
             direct.goBack()
         })
         .catch((err) =>{
@@ -45,10 +44,10 @@ function UserForm(props) {
 
     const renderForm = () => {
         if (types === 'create') {
-            return <FormUser_Create handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
+            return <FormUserLogin_Create handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
         }
         if (types === 'edit') {
-            return <FormUser_Edit id={id} handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
+            return <FormUserLogin_Edit id={id} handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
         }
     }
 
@@ -58,7 +57,7 @@ function UserForm(props) {
             <BreadCrumb link={
                 [
                     { name: 'Master' },
-                    { name: 'User' },
+                    { name: 'User Login' },
                     { name: types }
                 ]
 
@@ -70,10 +69,5 @@ function UserForm(props) {
 
 }
 
-const mapStateToProps = state =>{
-    return{
 
-    }
-}
-
-export default connect (mapStateToProps, {fetchUserFromBackEndToRedux })(UserForm)
+export default UserLoginForm

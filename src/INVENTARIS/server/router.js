@@ -28,7 +28,7 @@ app.use('/cabang', cabang) // Pakai file cabang.js untuk handle endpoint /cabang
 app.use('/department', department) 
 app.use('/user', user) 
 app.use('/vendor', vendor) 
-app.use('/login', login) 
+app.use('/userlogin', login) 
 var storageFile = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null, './images')

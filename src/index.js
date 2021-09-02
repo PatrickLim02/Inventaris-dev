@@ -11,7 +11,7 @@ import UploadFoto from './uploadFoto';
 import FirebaseDatabase from './firebaseDatabase'
 ReactDOM.render(
   <React.StrictMode>
-    <UploadFoto />
+    <ReduxProvider />
   </React.StrictMode>,
   document.getElementById('root')
 );

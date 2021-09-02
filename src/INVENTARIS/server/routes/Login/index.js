@@ -5,8 +5,29 @@ var server = new mysql()
 var jwt = require('jsonwebtoken')
 const verifyToken = require('../TokenValidation')
 
+
 router
-    .route('/') //endpoint /login
+    .route('/') //endpoint /cabang 
+    .get((req, res) => {
+        var paramQuery = Object.entries(req.query)
+        var paramObject = paramQuery[0]
+        var query = paramObject ? `select * from user_login where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from user_login limit 5'
+        server.query(query, (err, rows) => {
+            if (err) {
+                res.status(400).json({
+                    status: 400,
+                    message: err
+                })
+            }
+            res.status(200).json({
+                status: 200,
+                data: rows,
+            })
+        })
+    })
+
+router
+    .route('/verifylogin') //endpoint /login
     .post(verifyToken, (req, res) => {
         var username = req.body.username
         var password = req.body.password
@@ -27,23 +48,40 @@ router
                })
            }
         })
-
-
-        // jwt.verify(req.token, 'secretkey', (err, authData) => {  
-        //     res.send(authData)
-        //     if (err) {
-        //         res.status(400).json({
-        //             status: 400,
-        //             message: err
-        //         })
-        //     }
-        //     else {            
-              
-                
-        //     }
-
-        // })
     })
+
+
+    router
+    .route('/create')
+    .post((req, res) => {
+        var data = {  //Ini diusahakan harus sama dengan kolom di database
+            nama_lengkap: req.body.nama_lengkap || '',
+            username: req.body.username || '',
+            password: req.body.password || '',
+        }
+
+        console.log(data)
+        for (var i = 0; i <= Object.keys(data).length; i++) {
+            const keys = Object.keys(data)[i]
+            const values = Object.values(data)[i]
+            if (values === '') {
+                res.status(400).json({
+                    status: 400,
+                    message: `field ${keys.replace('_', ' ')} tidak boleh kosong`
+                })
+                return ''; // Agar code tidak lanjut kebawah
+            }
+        }
+        server.query("INSERT INTO user_login SET ? ", data, (err, result) => {
+            res.status(200).json({ // Untuk return value dari hasil submit
+                status: result,
+                data: data,
+                message: 'Data Berhasil Ditambahkan'
+            })
+
+        })
+    })
+
 
 
 module.exports = router

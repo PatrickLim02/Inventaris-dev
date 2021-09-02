@@ -2,7 +2,7 @@ import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR} from './gen
 import {getDepartment, getVendor} from '../../helpers/requestFirebase'
 import {getCabangList} from '../../helpers/requestCabang'
 import {getDeptList} from '../../helpers/requestDept'
-import {getUserList} from '../../helpers/requestUser'
+import {getUserList} from '../../helpers/requestEmployee'
 import { getVendorList } from '../../helpers/requestVendor'
 export const setAside = (payload) => {
   return {

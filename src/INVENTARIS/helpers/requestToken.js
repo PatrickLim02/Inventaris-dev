@@ -10,7 +10,7 @@ export const getAccessToken = (data = {}) =>{
 
   export const loginUser = (data = {}) =>{
     return Wrap({
-      url: '/login',
+      url: 'userlogin/verifylogin',
       method: 'POST',
       data,
     })

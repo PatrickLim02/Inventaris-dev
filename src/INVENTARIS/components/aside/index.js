@@ -32,12 +32,15 @@ import { setAside } from '../../redux'
 // Screen Import
 import Dashboard from '../../screens/Dashboard'
 import Inventaris from '../../screens/Inventaris'
+import UserLogin_List from '../../screens/UserLogin_List'
+import UserLogin_Form from '../../screens/UserLogin_Form'
+
 import Cabang_List from '../../screens/Cabang_List'
 import Cabang_Form from '../../screens/Cabang_Form'
 import Department_List from '../../screens/Department_List'
 import Department_Form from '../../screens/Department_Form'
-import User_List from '../../screens/User_List'
-import User_Form from '../../screens/User_Form'
+import Employee_List from '../../screens/Employee_List'
+import Employee_Form from '../../screens/Employee_Form'
 import Vendor_List from '../../screens/Vendor_List'
 import Vendor_Form from '../../screens/Vendor_Form'
 const Aside = (props) => {
@@ -81,7 +84,12 @@ const Aside = (props) => {
                             icon={<FaFileArchive />}
                             suffix={<span className="badge yellow"></span>}
                             title={'Master'}>
-
+                            <MenuItem>
+                                <ImOffice className="iconSubMenu" />
+                                <Link to="/userlogin-list">
+                                    User Login
+                                </Link>
+                            </MenuItem>
 
                             <MenuItem>
                                 <ImOffice className="iconSubMenu" />
@@ -99,8 +107,8 @@ const Aside = (props) => {
                             </MenuItem>
                             <MenuItem>
                                 <FaUserPlus className="iconSubMenu" />
-                                <Link to="/user-list">
-                                    User
+                                <Link to="/employee-list">
+                                    Employee
                                 </Link>
                             </MenuItem>
                             <MenuItem>
@@ -219,6 +227,11 @@ const Aside = (props) => {
             
                 <Route exact path={'/dashboard'} component={Dashboard} />
                 <Route path={'/inventaris'} component={Inventaris} />
+
+                <Route path={'/userlogin-list'} component={UserLogin_List} />
+                <Route path={'/userlogin-create/:types'} component={UserLogin_Form} />
+                <Route path={'/userlogin-edit/:types/:id'} component={UserLogin_Form} />
+
                 <Route path={'/cabang-list'} component={Cabang_List} />
                 <Route path={'/cabang-create/:types'} component={Cabang_Form} />
                 <Route path={'/cabang-edit/:types/:id'} component={Cabang_Form} />
@@ -227,9 +240,9 @@ const Aside = (props) => {
                 <Route path={'/department-create/:types'} component={Department_Form} />
                 <Route path={'/department-edit/:types/:id'} component={Department_Form} />
 
-                <Route path={'/user-list'} component={User_List} />
-                <Route path={'/user-create/:types'} component={User_Form} />
-                <Route path={'/user-edit/:types/:id'} component={User_Form} />
+                <Route path={'/employee-list'} component={Employee_List} />
+                <Route path={'/employee-create/:types'} component={Employee_Form} />
+                <Route path={'/employee-edit/:types/:id'} component={Employee_Form} />
 
                 <Route path={'/vendor-list'} component={Vendor_List} />
                 <Route path={'/vendor-create/:types'} component={Vendor_Form} />
