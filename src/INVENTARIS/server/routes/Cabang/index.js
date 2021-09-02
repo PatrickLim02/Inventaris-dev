@@ -11,22 +11,30 @@ router
     .route('/') //endpoint /cabang
     .get(verifyToken, (req, res) => {
         jwt.verify(req.token, 'secretkey', (err, autData) => {
-            var paramQuery = Object.entries(req.query)
-            var paramObject = paramQuery[0]
-            var query = paramObject ? `select * from cabang where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from cabang limit 5'
-            console.log('/cabang: ', query)
-            server.query(query, (err, rows) => {
-                if (err) {
-                    res.status(400).json({
-                        status: 400,
-                        message: err
-                    })
-                }
-                res.status(200).json({
-                    status: 200,
-                    data: rows,
+            if(typeof autData === 'undefined'){ // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
+                res.status(400).json({
+                    status: 400,
+                    message: err
                 })
-            })
+            }
+            else {
+                var paramQuery = Object.entries(req.query)
+                var paramObject = paramQuery[0]
+                var query = paramObject ? `select * from cabang where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from cabang limit 5'
+                console.log('/cabang: ', query)
+                server.query(query, (err, rows) => {
+                    if (err) {
+                        res.status(400).json({
+                            status: 400,
+                            message: err
+                        })
+                    }
+                    res.status(200).json({
+                        status: 200,
+                        data: rows,
+                    })
+                })
+            }            
         })
     })
 router
