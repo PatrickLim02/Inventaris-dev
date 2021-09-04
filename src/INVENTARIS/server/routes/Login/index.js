@@ -83,5 +83,65 @@ router
     })
 
 
+    router
+    .route('/detail/:id')
+    .get((req, res) => {
+        var id = req.params.id
+        var query = "Select * from user_login where id = " + id
+        server.query(query, (err, rows) => {
+            if (err) {
+                res.status(400).json({
+                    status: 400,
+                    message: err
+                })
+            }
+            res.status(200).json({
+                status: 200,
+                data: rows[0]
+            })
+        })
+    })
+
+    router
+    .route('/edit')
+    .post((req, res) => {
+        var data = {
+            id: req.body.id,
+            nama_lengkap: req.body.nama_lengkap,
+            username: req.body.username,
+            password: req.body.password
+        }
+
+        // validasi untuk agar field tidak boleh kosong
+        for (var i = 0; i <= Object.keys(data).length; i++) {
+            const keys = Object.keys(data)[i]  // nama kolom database
+            const values = Object.values(data)[i] // value kolom
+            if (values === '') {
+                res.status(400).json({
+                    status: 400,
+                    message: `field ${keys.replace('_', ' ')} tidak boleh kosong`
+                })
+                return ''; // Agar code tidak lanjut kebawah
+            }
+        }
+        var query = "UPDATE user_login SET nama_lengkap = '" + data.nama_lengkap + "', username = '" + data.username + "', password = '" + data.password + "' where id = " + data.id
+        server.query(query, (err, result) => {
+            if (err) {
+                res.json({
+                    status: 400,
+                    data: err
+                })
+            }
+            else {
+                res.json({
+                    status: 200,
+                    message: 'Berhasil Melakukan Update Data User Login ' + data.nama_lengkap,
+                    data: data
+                })
+            }
+        })
+    })
+
+
 
     module.exports = router

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import FormUserLogin_Create from '../../components/Form/FormUserLogin_Create'
 import FormUserLogin_Edit from '../../components/Form/FormUserLogin_Edit'
 import {fetchUserFromBackEndToRedux} from '../../redux'
-import  {createUserLogin, editUser} from '../../helpers/requestUserLogin'
+import  {createUserLogin, editUserLogin} from '../../helpers/requestUserLogin'
 function UserLoginForm(props) {
     const { types, id } = props.match.params; //Harus sama dengan yang di router
     const direct = useHistory();
@@ -23,10 +23,9 @@ function UserLoginForm(props) {
 
 
     const edit = async (datas) => {
-       editUser(datas).then((res) =>{
+        editUserLogin(datas).then((res) =>{
            alert(res.message)      
-           direct.goBack()
-           props.fetchUserFromBackEndToRedux()          
+           direct.goBack()        
        })
        .catch((err) =>{
            console.log(err)

@@ -95,7 +95,7 @@ function UserLoginList(props) {
                                         </td>
                                         <td>
                                             <button>
-                                                <Link to={'/employee-edit/edit/' + item.id}>
+                                                <Link to={'/userlogin-edit/edit/' + item.id}>
                                                     Edit
                                                 </Link>
                                             </button>

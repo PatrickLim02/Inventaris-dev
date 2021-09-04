@@ -20,9 +20,9 @@ export const getUserLimit = (params = {}, limit) => {
 };
 
 
-export const getUserDetail = (params = {}, id) => {
+export const getUserLoginDetail = (params = {}, id) => {
   return Wrap({
-    url: '/user/detail/' + id,
+    url: '/userlogin/detail/' + id,
     method: 'GET',
     params : {...params},
   });
@@ -36,9 +36,9 @@ export const createUserLogin = (data = {}) =>{
   })
 }
 
-export const editUser = (data = {}) =>{
+export const editUserLogin = (data = {}) =>{
   return Wrap({
-    url: '/user/edit',
+    url: '/userlogin/edit',
     method: 'POST',
     data,
   })
