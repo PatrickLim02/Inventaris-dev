@@ -14,7 +14,7 @@ router
             if(typeof autData === 'undefined'){ // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
                 res.status(400).json({
                     status: 400,
-                    message: 'err'
+                    message: err
                 })
             }
             else {
