@@ -7,12 +7,16 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import LoginIcon from '../../assets/login.png'
 import Sidebar from '../../../INVENTARIS'
+import { isJwtExpired } from 'jwt-check-expiration'
+import FormCreateCabang from '../../components/Form/FormCreateCabang'
 
 function LoginScreen(props) {
     const history = useHistory()
     const { setAuthorization } = props
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [token, setToken] = useState(localStorage.getItem('token'))
+    const [tokenExpired, setTokenExpired] = useState()
     const handleToken = () => {
         const params = {
             username: username,
@@ -42,15 +46,19 @@ function LoginScreen(props) {
                 alert(err.data.message)
             })
     }
-
-    const token = localStorage.getItem('token')
-
-    useEffect(() => {
-        if (token){
-            history.push('/dashboard')
-        }
-
+    
+   
+    useEffect (() => {
+     if(isJwtExpired(token) === true){
+        history.push('/login')
+        
+     }
+     else{
+        history.push('/dashboard')
+     }
     },[token])
+
+
     return (
         <div>
             <div className="container">

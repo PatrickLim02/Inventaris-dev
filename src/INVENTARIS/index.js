@@ -14,8 +14,6 @@ function Main(props) {
         props.fetchDepartmentFromBackEndToRedux()
         props.fetchUserFromBackEndToRedux()
         props.fetchVendorFromBackEndToRedux()
-
-       
     },[])
 
  

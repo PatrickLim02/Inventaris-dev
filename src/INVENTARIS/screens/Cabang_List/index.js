@@ -12,6 +12,7 @@ import { Container, ButtonDirects } from '../../components/components'
 import { getCabangList, getCabangLimit, deleteCabang, getSearchCabang } from '../../helpers/requestCabang'
 
 function CabangList(props) {
+    const history = useHistory()
     const {cabangList, fetchCabangFromBackEndToRedux, setCabang } = props;
     const [searchValue, setSearchValue] = useState('')
     const [valueLimit, setValueLimit] = useState(5)
@@ -24,6 +25,7 @@ function CabangList(props) {
         setValueLimit(limit)
         const res = await getSearchCabang(params)
         setCabang(res)
+       
     }
 
     const delCabang = (id) => {

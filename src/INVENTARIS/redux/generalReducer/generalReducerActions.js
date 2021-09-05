@@ -4,6 +4,9 @@ import {getCabangList} from '../../helpers/requestCabang'
 import {getDeptList} from '../../helpers/requestDept'
 import {getUserList} from '../../helpers/requestEmployee'
 import { getVendorList } from '../../helpers/requestVendor'
+import { useHistory } from 'react-router'
+import Login from '../../screens/Login'
+
 export const setAside = (payload) => {
   return {
     type: SET_ASIDE,
@@ -19,11 +22,28 @@ export const setCabang = (payload) => {
 }
 
 export const fetchCabangFromBackEndToRedux = () => {
-  console.log('Fetch Cabang Berhasil')
     return async(dispatch) =>{
+      
       const res = await getCabangList()
         dispatch(setCabang(res))
-    }
+    //   getCabangList({}).then((res) => {
+    //     if(res.status === 400){
+    //       return <Login />
+    //     }
+    //     else{
+    //       dispatch(setCabang(res))
+    //       console.log('Berhasil')
+    //     }
+        
+    //   })
+    //   .catch((err)=>{
+        
+    //     console.log('token invalid errr', err)
+    //     return <Login />
+       
+    //   })
+    // }
+}
 }
 
 export const setDepartment = (payload) => {

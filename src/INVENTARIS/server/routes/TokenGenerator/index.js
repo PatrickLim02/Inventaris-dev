@@ -13,7 +13,7 @@ router
             username: req.body.username,
             password: req.body.password
         }
-        jwt.sign({user}, 'secretkey' , {expiresIn: "15s"}, (err, token) =>{ // 'secretkey' dipakai di setiap endpoint yang mau pakai access token
+        jwt.sign({user}, 'secretkey' , {expiresIn: "30s"}, (err, token) =>{ // 'secretkey' dipakai di setiap endpoint yang mau pakai access token
             res.status(200).json({
                 token // send generated token to clients
             })
