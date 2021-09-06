@@ -3,7 +3,8 @@ import {SET_AUTHORIZATION} from './authorizationReducerTypes'
 
 const initialState = {
     token : {
-        data: '',
+        expired: false,
+        message: '',
     },
 
 

@@ -23,7 +23,6 @@ function LoginScreen(props) {
             password: password
         }
         getAccessToken(params).then(async (res) => {
-            setAuthorization({ data: res.token })
             localStorage.setItem('token', res.token)
             if (res.token) {
                 history.push('/dashboard')

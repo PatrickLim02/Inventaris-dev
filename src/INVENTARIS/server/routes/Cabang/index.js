@@ -12,10 +12,21 @@ router
     .get(verifyToken, (req, res) => {
         jwt.verify(req.token, 'secretkey', (err, autData) => {
             if(typeof autData === 'undefined'){ // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
-                res.status(400).json({
-                    status: 400,
-                    message: err
-                })
+                try{
+                    if(err.message.includes('expired')){
+                        res.status(401).json({
+                            status: 401,
+                            message: err
+                        })               
+                    }          
+                    res.status(400).json({
+                        status: 400,
+                        message: err
+                    })
+                }
+                catch{
+                    console.log('Token is not recognized') // Client mengirim token yang expired ke backend
+                }
             }
             else {
                 var paramQuery = Object.entries(req.query)

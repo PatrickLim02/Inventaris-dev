@@ -1,9 +1,10 @@
-import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR} from './generalReducerTypes'
-import {getDepartment, getVendor} from '../../helpers/requestFirebase'
-import {getCabangList} from '../../helpers/requestCabang'
-import {getDeptList} from '../../helpers/requestDept'
-import {getUserList} from '../../helpers/requestEmployee'
+import { SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR } from './generalReducerTypes'
+import { getDepartment, getVendor } from '../../helpers/requestFirebase'
+import { getCabangList } from '../../helpers/requestCabang'
+import { getDeptList } from '../../helpers/requestDept'
+import { getUserList } from '../../helpers/requestEmployee'
 import { getVendorList } from '../../helpers/requestVendor'
+import {setAuthorization} from '../../redux/authorizationReducer/authorizationReducerActions'
 import { useHistory } from 'react-router'
 import Login from '../../screens/Login'
 
@@ -22,28 +23,15 @@ export const setCabang = (payload) => {
 }
 
 export const fetchCabangFromBackEndToRedux = () => {
-    return async(dispatch) =>{
-      
-      const res = await getCabangList()
-        dispatch(setCabang(res))
-    //   getCabangList({}).then((res) => {
-    //     if(res.status === 400){
-    //       return <Login />
-    //     }
-    //     else{
-    //       dispatch(setCabang(res))
-    //       console.log('Berhasil')
-    //     }
-        
-    //   })
-    //   .catch((err)=>{
-        
-    //     console.log('token invalid errr', err)
-    //     return <Login />
-       
-    //   })
-    // }
-}
+  return async (dispatch) => {
+    getCabangList().then((res) => {
+      dispatch(setCabang(res))
+    })
+   .catch((err) => {
+     dispatch(setAuthorization({expired: true, message: err.data.message.message}))
+   })
+
+  }
 }
 
 export const setDepartment = (payload) => {
@@ -54,9 +42,9 @@ export const setDepartment = (payload) => {
 }
 
 export const fetchDepartmentFromBackEndToRedux = () => {
-  return async(dispatch) =>{
+  return async (dispatch) => {
     const res = await getDeptList()
-      dispatch(setDepartment(res))
+    dispatch(setDepartment(res))
   }
 }
 
@@ -67,10 +55,10 @@ export const setUser = (payload) => {
   }
 }
 
-export const fetchUserFromBackEndToRedux = () =>{
-  return async(dispatch) =>{
+export const fetchUserFromBackEndToRedux = () => {
+  return async (dispatch) => {
     const res = await getUserList()
-      dispatch(setUser(res))
+    dispatch(setUser(res))
   }
 }
 
@@ -81,10 +69,10 @@ export const setVendor = (payload) => {
   }
 }
 
-export const fetchVendorFromBackEndToRedux = () =>{
-  return async(dispatch) =>{
+export const fetchVendorFromBackEndToRedux = () => {
+  return async (dispatch) => {
     const res = await getVendorList()
-      dispatch(setVendor(res))
+    dispatch(setVendor(res))
   }
 }
 
