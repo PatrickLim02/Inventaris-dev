@@ -13,6 +13,7 @@
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-animated-modal": "^1.1.1",
+    "react-audio-player": "^0.17.0",
     "react-bootstrap": "^1.6.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.2",

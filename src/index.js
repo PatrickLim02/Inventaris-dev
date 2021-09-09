@@ -8,10 +8,11 @@ import reportWebVitals from './reportWebVitals';
 
 import ReduxProvider from './reduxProvider'
 import UploadFoto from './uploadFoto';
+import UploadMusic from './uploadMusic'
 import FirebaseDatabase from './firebaseDatabase'
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider />
+    <UploadMusic />
   </React.StrictMode>,
   document.getElementById('root')
 );

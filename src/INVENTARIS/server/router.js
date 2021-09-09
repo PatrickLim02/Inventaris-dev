@@ -9,7 +9,8 @@ var vendor = require('./routes/vendor')
 var login = require('./routes/Login')
 var multer = require('multer')
 var tokenGenerator = require('./routes/TokenGenerator')
-var upload = require('./routes/UploadImages')
+var uploadImage = require('./routes/UploadImages')
+var uploadMusic = require('./routes/UploadMusic')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
     }
     next()
 })
+app.use('/images', express.static('./images')) // mau compare file yang ada di folder images (local disk)
+app.use('/music', express.static('./music'))
 
 
 app.use('/tokengenerator', tokenGenerator)
@@ -30,8 +33,9 @@ app.use('/department', department)
 app.use('/user', user) 
 app.use('/vendor', vendor) 
 app.use('/userlogin', login) 
-app.use('/files', upload)
-app.use('/images', express.static('./images')) // mau compare file yang ada di folder images (local disk)
+app.use('/files', uploadImage)
+app.use('/music', uploadMusic)
+
 
 
 app.listen(8000, (req, res) => {

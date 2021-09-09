@@ -17,3 +17,21 @@ export const uploadImage = (body = {}) =>{
         data,
     })
 }
+
+
+export const getMusic = (params = {}) => {  // List Cabang
+  return Wrap({
+    url: '/music/getFile',
+    method: 'GET',
+    params : {...params},
+  });
+};
+
+export const uploadMusic = (body = {}) =>{
+  const data = toFormData(body)
+  return Wrap({
+      url: 'music/submit',
+      method: 'POST',
+      data,
+  })
+}

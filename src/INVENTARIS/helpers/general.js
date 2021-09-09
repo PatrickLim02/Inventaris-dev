@@ -1,6 +1,4 @@
 export const toFormData = (object) =>{
-    console.log('nama file: ', object)
-    console.log()
     const formData = new FormData()
     Object.keys(object).forEach(key => {
         if(object[key]){
