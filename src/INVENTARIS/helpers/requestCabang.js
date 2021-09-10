@@ -10,6 +10,14 @@ export const getCabangList = (params = {}) => {
   });
 };
 
+export const getCabangPagination = (params = {}) => {
+  return Wrap({
+    url: '/cabang/paging',
+    method: 'GET',
+    params : {...params},
+    
+  });
+};
 
 export const getCabangLimit = (params = {}, limit) => {
   return Wrap({

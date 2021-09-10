@@ -12,7 +12,7 @@ import UploadMusic from './uploadMusic'
 import FirebaseDatabase from './firebaseDatabase'
 ReactDOM.render(
   <React.StrictMode>
-    <UploadMusic />
+    <ReduxProvider />
   </React.StrictMode>,
   document.getElementById('root')
 );

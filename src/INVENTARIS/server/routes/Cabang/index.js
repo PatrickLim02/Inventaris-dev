@@ -11,27 +11,27 @@ router
     .route('/') //endpoint /cabang
     .get(verifyToken, (req, res) => {
         jwt.verify(req.token, 'secretkey', (err, autData) => {
-            if(typeof autData === 'undefined'){ // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
-                try{
-                    if(err.message.includes('expired')){
+            if (typeof autData === 'undefined') { // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
+                try {
+                    if (err.message.includes('expired')) {
                         res.status(401).json({
                             status: 401,
                             message: err
-                        })               
-                    }          
+                        })
+                    }
                     res.status(400).json({
                         status: 400,
                         message: err
                     })
                 }
-                catch{
+                catch {
                     console.log('Token is not recognized') // Client mengirim token yang expired ke backend
                 }
             }
             else {
                 var paramQuery = Object.entries(req.query)
                 var paramObject = paramQuery[0]
-                var query = paramObject ? `select * from cabang where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from cabang limit 5'
+                var query = paramObject ? `select * from cabang where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from cabang limit 10'
                 console.log('/cabang: ', query)
                 server.query(query, (err, rows) => {
                     if (err) {
@@ -45,7 +45,7 @@ router
                         data: rows,
                     })
                 })
-            }            
+            }
         })
     })
 router
@@ -178,4 +178,52 @@ router
         })
     })
 
+
+router
+    .route('/paging') //endpoint /cabang
+    .get(verifyToken, (req, res) => {
+        jwt.verify(req.token, 'secretkey', (err, autData) => {
+            if (typeof autData === 'undefined') { // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
+                try {
+                    if (err.message.includes('expired')) {
+                        res.status(401).json({
+                            status: 401,
+                            message: err
+                        })
+                    }
+                    res.status(400).json({
+                        status: 400,
+                        message: err
+                    })
+                }
+                catch {
+                    console.log('Token is not recognized') // Client mengirim token yang expired ke backend
+                }
+            }
+            else {
+                var paramQuery = req.query
+                const paging = paramQuery?.page - 1
+                const pageConverter = paging * 10
+                var query = `select * from cabang limit ${pageConverter}, 10`
+                server.query(query, (err, rows) => {
+                    var queryString = 'select * from cabang'
+                    server.query(queryString, (err, datas) => {
+                        if (err) {
+                            res.status(400).json({
+                                status: 400,
+                                message: err
+                            })
+                        }
+                        res.status(200).json({
+                            status: 200,
+                            totalRows: datas.length,
+                            data: rows.length === 0 ? 'no data' : rows,
+                            
+                        })
+                    })
+                })
+
+            }
+        })
+    })
 module.exports = router

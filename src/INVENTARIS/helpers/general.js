@@ -9,3 +9,8 @@ export const toFormData = (object) =>{
     return formData
 }
 
+export const paginationConverter = (value) =>{
+    const divider = value / 10
+    const totalPage = Math.ceil(divider)
+    return totalPage;
+}

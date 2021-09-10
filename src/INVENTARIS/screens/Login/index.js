@@ -48,14 +48,14 @@ function LoginScreen(props) {
     
    
     useEffect (() => {
-     if(isJwtExpired(token) === true){
+     if(!localStorage.getItem('token')){
         history.push('/login')
         
      }
      else{
         history.push('/dashboard')
      }
-    },[token])
+    },[])
 
 
     return (
