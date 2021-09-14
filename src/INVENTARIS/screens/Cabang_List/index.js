@@ -11,14 +11,20 @@ import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
 import { getCabangList, getCabangLimit, deleteCabang, getSearchCabang, getCabangPagination } from '../../helpers/requestCabang'
 import { paginationConverter } from '../../helpers/general'
-
+import ButtonAdd from '../../components/ButtonAdd'
 function CabangList(props) {
     const history = useHistory()
     const { cabangList, fetchCabangFromBackEndToRedux, setCabang } = props;
     const [searchValue, setSearchValue] = useState('')
     const [valueLimit, setValueLimit] = useState(10)
     const [totalPage, setTotalPage] = useState()
-    const [idx, setIdx] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [pageNumberLimit, setPageNumberLimit] = useState(5)
+    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
+    const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
+    const [firstPage, setFirstPage] = useState(1)
+
+
     const handleFilter = async (limit) => {
         const params = {
             nama_cabang: searchValue,
@@ -27,7 +33,6 @@ function CabangList(props) {
         setValueLimit(limit)
         const res = await getSearchCabang(params)
         setCabang(res)
-
     }
 
     const delCabang = (id) => {
@@ -48,7 +53,7 @@ function CabangList(props) {
     useEffect(() => {
         getCabangPagination({ page: 1 }).then((res) => {
             setTotalPage(paginationConverter(res.totalRows))
-         
+
         })
             .catch((err) => {
                 console.log('Failed to request data cabang : ', err)
@@ -63,23 +68,39 @@ function CabangList(props) {
         return total
 
     }
-  
+
+    const handleButtonPage = (page) => {
+        setCurrentPage(page)
+        paginationFetch(page)
+    }
+    const nextButton = () => {
+        setCurrentPage(currentPage + 1)
+        paginationFetch(currentPage + 1)
+        if (currentPage + 1 > maxPageNumberLimit) {
+            setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit)
+            setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit)
+        }
+    }
+    const prevButton = () => {
+        paginationFetch(currentPage - 1)
+        setCurrentPage(currentPage - 1)
+        if ((currentPage - 1) % pageNumberLimit == 0) {
+            setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit)
+            setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit)
+        }
+    }
     return (
         <Container>
-          
             <BreadCrumb link={
                 [
                     { name: 'Master' },
                     { name: 'Cabang' }
                 ]
             } />
-
+            <ButtonAdd to={'/cabang-create/create'}/>
             <div className="table-container">
                 <div className="table-card">
-                    <div>
-                        <ButtonDirects to={'/cabang-create/create'} backgroundcolor={'orange'} label={'+ Create'} /> <br />
-
-                        <select onChange={(ev) => handleFilter(ev.target.value)}>
+                    <div>   <select onChange={(ev) => handleFilter(ev.target.value)}>
                             <option value={10}>Entries 10</option>
                             <option value={20}>Entries 20</option>
                             <option value={30}>Entries 30</option>
@@ -140,17 +161,23 @@ function CabangList(props) {
                         </tbody>
                     </table>
                 </div>
-                {renderPagination().map((item) => {
-                    return (
-                        <button className={`btn-page ${item === idx ? 'btn-active' : 'btn-unactive'}`} onClick={() => {
-                            setIdx(item)
-                            paginationFetch(item)
-                          
-                        }}>
-                            {item}
-                        </button>
-                    )
-                })}
+                <div className="pagination-section">
+                    <button onClick={prevButton} disabled={currentPage === firstPage ? true : false}> Prev </button>
+                    {renderPagination()?.map((page) => {
+                        if (page < maxPageNumberLimit + 1 && page > minPageNumberLimit) {
+                            return (
+                                <button className={`btn-page ${currentPage === page ? 'btn-active' : 'btn-unactive'}`} onClick={() => handleButtonPage(page)}>
+                                    {page}
+                                </button>
+                            )
+                        }
+                        else {
+                            return null
+                        }
+                    })}
+                    <button onClick={nextButton} disabled={currentPage === totalPage ? true : false}> Next </button>
+                </div>
+
             </div>
         </Container>
 
