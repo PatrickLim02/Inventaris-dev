@@ -41,6 +41,8 @@ import Department_List from '../../screens/Department_List'
 import Department_Form from '../../screens/Department_Form'
 import Employee_List from '../../screens/Employee_List'
 import Employee_Form from '../../screens/Employee_Form'
+import Barang_List from '../../screens/Barang_List'
+import Barang_Form from '../../screens/Barang_Form'
 import Vendor_List from '../../screens/Vendor_List'
 import Vendor_Form from '../../screens/Vendor_Form'
 const Aside = (props) => {
@@ -109,6 +111,12 @@ const Aside = (props) => {
                                 <FaUserPlus className="iconSubMenu" />
                                 <Link to="/employee-list">
                                     Employee
+                                </Link>
+                            </MenuItem>
+                            <MenuItem>
+                                <FaUserPlus className="iconSubMenu" />
+                                <Link to="/barang-list">
+                                    Barang
                                 </Link>
                             </MenuItem>
                             <MenuItem>
@@ -243,6 +251,10 @@ const Aside = (props) => {
                 <Route path={'/employee-list'} component={Employee_List} />
                 <Route path={'/employee-create/:types'} component={Employee_Form} />
                 <Route path={'/employee-edit/:types/:id'} component={Employee_Form} />
+
+                <Route path={'/barang-list'} component={Barang_List} />
+                <Route path={'/barang-create/:types'} component={Barang_Form} />
+                <Route path={'/barang-edit/:types/:id'} component={Barang_Form} />
 
                 <Route path={'/vendor-list'} component={Vendor_List} />
                 <Route path={'/vendor-create/:types'} component={Vendor_Form} />

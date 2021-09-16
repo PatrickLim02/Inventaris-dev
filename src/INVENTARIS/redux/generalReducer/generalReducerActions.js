@@ -1,9 +1,10 @@
-import { SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR } from './generalReducerTypes'
+import { SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR, SET_BARANG } from './generalReducerTypes'
 import { getDepartment, getVendor } from '../../helpers/requestFirebase'
 import { getCabangList } from '../../helpers/requestCabang'
 import { getDeptList } from '../../helpers/requestDept'
 import { getUserList } from '../../helpers/requestEmployee'
 import { getVendorList } from '../../helpers/requestVendor'
+import {getBarangList} from '../../helpers/requestBarang'
 import {setAuthorization} from '../../redux/authorizationReducer/authorizationReducerActions'
 import { useHistory } from 'react-router'
 import Login from '../../screens/Login'
@@ -76,3 +77,16 @@ export const fetchVendorFromBackEndToRedux = () => {
   }
 }
 
+export const setBarang = (payload) => {
+  return {
+    type: SET_BARANG,
+    payload,
+  }
+}
+
+export const fetchBarangFromBackEndToRedux = () => {
+  return async (dispatch) => {
+    const res = await getBarangList()
+    dispatch(setBarang(res))
+  }
+}

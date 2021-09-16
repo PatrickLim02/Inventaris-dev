@@ -1,5 +1,5 @@
 
-import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_VENDOR, SET_USER} from './generalReducerTypes'
+import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_VENDOR, SET_USER, SET_BARANG} from './generalReducerTypes'
 
 const initialState = {
     sidebar : {
@@ -19,6 +19,11 @@ const initialState = {
     ,
 
     user :{
+
+    }
+    ,
+
+    barang :{
 
     }
     ,
@@ -61,6 +66,14 @@ const generalReducer = (state = initialState, action) =>{
             ...state,
             user: {
                 ...state.user,
+                ...action.payload
+            }
+        }
+
+        case SET_BARANG: return {
+            ...state,
+            barang: {
+                ...state.barang,
                 ...action.payload
             }
         }

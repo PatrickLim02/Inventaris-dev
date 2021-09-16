@@ -8,6 +8,7 @@ function TokenModal(props) {
     const { expiredToken } = props
     console.log('Expired Token: ', expiredToken)
     const toLoginPage = () =>{
+        localStorage.removeItem('token')
         window.location.href='http://localhost:3000/login'
     }
     if (!expiredToken?.expired) {

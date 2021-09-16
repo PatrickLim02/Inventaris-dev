@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Aside from './components/aside'
 import Header from './components/header'
-import {fetchDepartmentFromBackEndToRedux, fetchVendorFromBackEndToRedux, fetchCabangFromBackEndToRedux, fetchUserFromBackEndToRedux} from './redux'
+import {fetchDepartmentFromBackEndToRedux, fetchVendorFromBackEndToRedux, fetchCabangFromBackEndToRedux, fetchUserFromBackEndToRedux, fetchBarangFromBackEndToRedux} from './redux'
 import {connect} from 'react-redux'
 import {
     Link, useHistory, BrowserRouter as Router, Route
@@ -14,6 +14,7 @@ function Main(props) {
         props.fetchDepartmentFromBackEndToRedux()
         props.fetchUserFromBackEndToRedux()
         props.fetchVendorFromBackEndToRedux()
+        props.fetchBarangFromBackEndToRedux()
     },[])
 
  
@@ -30,4 +31,4 @@ function Main(props) {
 const mapStateToProps = state =>{
     return {}
 }
-export default connect (mapStateToProps, {fetchCabangFromBackEndToRedux, fetchDepartmentFromBackEndToRedux, fetchUserFromBackEndToRedux, fetchVendorFromBackEndToRedux}) (Main);
+export default connect (mapStateToProps, {fetchCabangFromBackEndToRedux, fetchDepartmentFromBackEndToRedux, fetchUserFromBackEndToRedux, fetchVendorFromBackEndToRedux, fetchBarangFromBackEndToRedux}) (Main);
