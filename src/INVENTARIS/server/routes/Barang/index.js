@@ -199,7 +199,7 @@ router
                 const pageConverter = paging * 10
                 var query = `select * from barang limit ${pageConverter}, 10`
                 server.query(query, (err, rows) => {
-                    var queryString = 'select * from cabang'
+                    var queryString = 'select * from barang'
                     server.query(queryString, (err, datas) => {
                         if (err) {
                             res.status(400).json({

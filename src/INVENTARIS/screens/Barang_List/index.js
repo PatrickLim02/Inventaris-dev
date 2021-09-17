@@ -9,7 +9,7 @@ import firebase from '../../../firebaseAPI'
 import { setBarang, fetchBarangFromBackEndToRedux } from '../../redux'
 import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
-import { getCabangList, getCabangLimit, deleteCabang, getSearchCabang, getCabangPagination } from '../../helpers/requestCabang'
+import { getBarangList, getBarangLimit, deleteBarang, getSearchBarang, getBarangPagination } from '../../helpers/requestBarang'
 import { paginationConverter } from '../../helpers/general'
 import ButtonAdd from '../../components/ButtonAdd'
 function BarangList(props) {
@@ -19,7 +19,7 @@ function BarangList(props) {
     const [valueLimit, setValueLimit] = useState(10)
     const [totalPage, setTotalPage] = useState()
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageNumberLimit, setPageNumberLimit] = useState(5)
+    const [pageNumberLimit, setPageNumberLimit] = useState(1)
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
@@ -27,23 +27,23 @@ function BarangList(props) {
 
     const handleFilter = async (limit) => {
         const params = {
-            nama_cabang: searchValue,
+            nama_barang: searchValue,
             limit: limit
         }
         setValueLimit(limit)
-        const res = await getSearchCabang(params)
+        const res = await getSearchBarang(params)
         setBarang(res)
     }
 
     const delCabang = (id) => {
-        deleteCabang({}, id)
+        deleteBarang({}, id)
         handleFilter(valueLimit)
     }
     const paginationFetch = (item) => {
         const params = {
             page: item
         }
-        getCabangPagination(params).then((res) => {
+        getBarangPagination(params).then((res) => {
             setBarang(res)
         })
             .catch((err) => {
@@ -51,7 +51,7 @@ function BarangList(props) {
             })
     }
     useEffect(() => {
-        getCabangPagination({ page: 1 }).then((res) => {
+        getBarangPagination({ page: 1 }).then((res) => {
             setTotalPage(paginationConverter(res.totalRows))
 
         })
@@ -66,7 +66,6 @@ function BarangList(props) {
             total = [...total, i] // menambahkan array baru namun array yang lama tidak dihilangkan
         }
         return total
-
     }
 
     const handleButtonPage = (page) => {
@@ -109,7 +108,7 @@ function BarangList(props) {
 
                     </div>
 
-                    <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Cabang'} style={{ textTransform: 'capitalize' }} />
+                    <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Barang'} style={{ textTransform: 'capitalize' }} />
 
                     <ButtonDirects backgroundcolor={'red'} label={'Cari'} onClick={() => handleFilter(valueLimit)} />
 
@@ -135,7 +134,7 @@ function BarangList(props) {
                                        
                                         <td>
                                             <button>
-                                                <Link to={'/cabang-edit/edit/' + item.id}>
+                                                <Link to={'/barang-edit/edit/' + item.id}>
                                                     Edit
                                                 </Link>
                                             </button>
