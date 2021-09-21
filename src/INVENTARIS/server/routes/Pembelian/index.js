@@ -28,22 +28,22 @@ router
                     console.log('Token is not recognized') // Client mengirim token yang expired ke backend
                 }
             }
-            else {
+            else {                
                 var paramQuery = Object.entries(req.query)
-                var paramObject = paramQuery[0]
-                console.log('Param Object: ', paramObject)
+                var paramObject = paramQuery[0]               
                 var query = paramObject ?
-                `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id = v.id inner join user u on ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`
+                `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
+                ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`
                 : 
-                'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'
-                
-                server.query(query, (err, rows) => {
+                'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'               
+                server.query(query, (err, rows) => {                    
                     if (err) {
+
                         res.status(400).json({
                             status: 400,
                             message: err
                         })
-                    }
+                    }                 
                     res.status(200).json({
                         status: 200,
                         data: rows,

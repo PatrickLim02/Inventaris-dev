@@ -11,6 +11,7 @@ import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
 import { getPembelianList, getPembelianLimit, deletePembelian, getSearchPembelian, getPembelianPagination } from '../../helpers/request_pembelian'
 import { paginationConverter } from '../../helpers/general'
+import moment from 'moment'
 import ButtonAdd from '../../components/ButtonAdd'
 function Pembelian_List(props) {
     const [pembelianList, setPembelianList] = useState([])
@@ -22,7 +23,7 @@ function Pembelian_List(props) {
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
-
+    const [searchOption, setSearchOption] = useState('nama_vendor')
     const loadData = () => {
         getPembelianList({}).then((res) => {
             console.log('pembelian list:', res)
@@ -33,13 +34,28 @@ function Pembelian_List(props) {
             })
     }
     const handleFilter = async (limit) => {
-        const params = {
-            nama_barang: searchValue,
-            limit: limit
+        var params = {}
+        if (searchOption === 'nama_vendor') {
+            params = {
+                nama_vendor: searchValue,
+                limit: limit
+            }
+        }
+        else {
+            params = {
+                nama_user: searchValue,
+                limit: limit
+            }
         }
         setValueLimit(limit)
-        const res = await getSearchPembelian(params)
-        setPembelianList(res)
+        await getPembelianList(params).then((res) => {
+            setPembelianList(res.data)
+        })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        // setPembelianList(res.data)
     }
 
     const delCabang = (id) => {
@@ -120,11 +136,11 @@ function Pembelian_List(props) {
 
 
                     </div>
-                    <select onChange={(ev) => handleFilter(ev.target.value)}>
-                            <option value={'nama_vendor'}>Nama Vendor</option>
-                            <option value={'nama_user'}>Nama Employee</option>
+                    <select onChange={(ev) => setSearchOption(ev.target.value)}>
+                        <option value={'nama_vendor'}>Nama Vendor</option>
+                        <option value={'nama_user'}>Nama Employee</option>
 
-                        </select>
+                    </select>
                     <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Vendor'} style={{ textTransform: 'capitalize' }} />
 
                     <ButtonDirects backgroundcolor={'red'} label={'Cari'} onClick={() => handleFilter(valueLimit)} />
@@ -155,7 +171,7 @@ function Pembelian_List(props) {
                                             <span>{item.nama_user}</span>
                                         </td>
                                         <td>
-                                            <span>{item.tgl_pembelian}</span>
+                                            <span>{moment(item.tgl_pembelian).format('DD-MM-YYYY')}</span>
                                         </td>
                                         <td>
                                             <span>{item.total_pembelian}</span>
