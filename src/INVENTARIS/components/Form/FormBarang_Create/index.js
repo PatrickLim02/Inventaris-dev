@@ -10,7 +10,7 @@ function FormCreateBarang(props) {
     
     const sentData = async () =>{ //Harus sama dengan kolom dengan di node js / database
         const rekapData = {
-        nama_cabang: namaBarang,
+        nama_barang: namaBarang,
         satuan: satuan,
      
     }

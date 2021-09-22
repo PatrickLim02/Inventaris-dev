@@ -10,6 +10,7 @@
     "cryptr": "^6.0.2",
     "firebase": "^8.7.1",
     "jwt-check-expiration": "^1.0.5",
+    "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-animated-modal": "^1.1.1",

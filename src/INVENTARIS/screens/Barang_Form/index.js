@@ -5,9 +5,9 @@ import BreadCrumb from '../../components/BreadCrumb'
 import { setBarang, fetchBarangFromBackEndToRedux } from '../../redux'
 import { useHistory } from 'react-router-dom'
 import FormCreateBarang from '../../components/Form/FormBarang_Create'
-import FormEditCabang from '../../components/Form/FormEditCabang'
+import FormEditBarang from '../../components/Form/FormBarang_Edit'
 import Modal from 'react-modal'
-import {createCabang, editCabang} from '../../helpers/requestCabang'
+import {createBarang, editBarang} from '../../helpers/requestBarang'
 
 function CreateBarang(props) {
     const { types, id } = props.match.params; //Harus sama dengan yang di router
@@ -19,7 +19,7 @@ function CreateBarang(props) {
     const [errorMessage, setErrorMessage] = useState('')
 
     const create = async (datas) => {
-         await createCabang(datas).then((res) =>{
+         await createBarang(datas).then((res) =>{
             console.log('res: ', res)
             alert(res.message)
             fetchBarangFromBackEndToRedux()
@@ -32,7 +32,7 @@ function CreateBarang(props) {
 
 
     const edit = async (datas) => {
-        await editCabang(datas).then((res) =>{
+        await editBarang(datas).then((res) =>{
             console.log('res: ', res)
             alert(res.message)
             fetchBarangFromBackEndToRedux()
@@ -57,7 +57,7 @@ function CreateBarang(props) {
             return <FormCreateBarang handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
         }
         if (types === 'edit') {
-            return <FormEditCabang id={id} handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
+            return <FormEditBarang id={id} handleSubmitFirebase={handleSubmitFirebase} /**bebas = nama function */ />
         }
     }
 

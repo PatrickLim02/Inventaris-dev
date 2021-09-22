@@ -28,17 +28,22 @@ router
                     console.log('Token is not recognized') // Client mengirim token yang expired ke backend
                 }
             }
-            else {
+            else {                
                 var paramQuery = Object.entries(req.query)
-                var paramObject = paramQuery[0]
-                var query = paramObject ? `select * from barang where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from barang limit 10'
-                server.query(query, (err, rows) => {
+                var paramObject = paramQuery[0]               
+                var query = paramObject ?
+                `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
+                ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`
+                : 
+                'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'               
+                server.query(query, (err, rows) => {                    
                     if (err) {
+
                         res.status(400).json({
                             status: 400,
                             message: err
                         })
-                    }
+                    }                 
                     res.status(200).json({
                         status: 200,
                         data: rows,
@@ -51,7 +56,7 @@ router
     .route('/detail/:id')
     .get((req, res) => {
         var id = req.params.id
-        var query = "Select * from barang where id = " + id
+        var query = "Select * from pembelian_header where id = " + id
         server.query(query, (err, rows) => {
             if (err) {
                 res.status(400).json({
@@ -69,9 +74,9 @@ router
 router
     .route('/search')
     .get((req, res) => {
-        var nama_barang = req.query.nama_barang
+        var nama_vendor = req.query.nama_vendor
         var limit = req.query.limit || ''
-        var query = `select * from barang where nama_barang like '%${nama_barang}%' limit ${limit} `;
+        var query = `select * from pembelian_header where nama_vendor like '%${nama_vendor}%' limit ${limit} `;
         console.log('search:', query)
         server.query(query, (err, rows) => {
             if (err) {
@@ -90,8 +95,10 @@ router
     .route('/create')
     .post((req, res) => {
         var data = {  //Ini diusahakan harus sama dengan kolom di database
-            nama_barang: req.body.nama_barang || '',
-            satuan: req.body.satuan || '',
+            id_vendor: req.body.id_vendor || '',
+            id_employee: req.body.id_employee || '',
+            tgl_pembelian: req.body.tgl_pembelian || '',
+            total_pembelian: req.body.total_pembelian || '',
                    }
 
         console.log(data)
@@ -106,7 +113,7 @@ router
                 return ''; // Agar code tidak lanjut kebawah
             }
         }
-        server.query("INSERT INTO barang SET ? ", data, (err, result) => {
+        server.query("INSERT INTO pembelian_header SET ? ", data, (err, result) => {
             res.status(200).json({ // Untuk return value dari hasil submit
                 status: result,
                 data: data,
@@ -121,8 +128,10 @@ router
     .post((req, res) => {
         var data = {
             id : req.body.id,
-            nama_barang: req.body.nama_barang,
-            satuan: req.body.satuan
+            id_vendor: req.body.id_vendor,
+            id_employee: req.body.id_employee,
+            tgl_pembelian: req.body.tgl_pembelian,
+            total_pembelian: req.body.total_pembelian,
         }
 
         // validasi untuk agar field tidak boleh kosong
@@ -137,7 +146,7 @@ router
                 return ''; // Agar code tidak lanjut kebawah
             }
         }
-        var query = "UPDATE barang SET nama_barang = '" + data.nama_barang + "', satuan = '" + data.satuan + "' where id = " + data.id
+        var query = `UPDATE pembelian_header SET id_vendor = '${data.id_vendor}' , id_employee = '${data.id_employee}' , tgl_pembelian = '${data.tgl_pembelian}', total_pembelian = '${data.total_pembelian}' where id = ${data.id}`
         server.query(query, (err, result) => {
             if (err) {
                 res.json({
@@ -148,7 +157,7 @@ router
             else {
                 res.json({
                     status: 200,
-                    message: 'Berhasil Melakukan Update Data Barang ' + data.nama_barang,
+                    message: 'Berhasil Melakukan Update Data Pembelian',
                     data: data
                 })
             }
@@ -159,7 +168,7 @@ router
     .route('/delete/:id')
     .get((req, res) => {
         var id = req.params.id
-        var query = "Delete From barang Where id = " + id
+        var query = "Delete From pembelian_header Where id = " + id
         server.query(query, (err, rows) => {
             if (err) {
                 res.json({ message: err })
@@ -197,9 +206,9 @@ router
                 var paramQuery = req.query
                 const paging = paramQuery?.page - 1
                 const pageConverter = paging * 10
-                var query = `select * from barang limit ${pageConverter}, 10`
+                var query = `select * from pembelian_header limit ${pageConverter}, 10`
                 server.query(query, (err, rows) => {
-                    var queryString = 'select * from barang'
+                    var queryString = 'select * from pembelian_header'
                     server.query(queryString, (err, datas) => {
                         if (err) {
                             res.status(400).json({

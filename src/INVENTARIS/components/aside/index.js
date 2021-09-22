@@ -35,6 +35,8 @@ import Inventaris from '../../screens/Inventaris'
 import UserLogin_List from '../../screens/UserLogin_List'
 import UserLogin_Form from '../../screens/UserLogin_Form'
 
+
+// -- MASTER -- 
 import Cabang_List from '../../screens/Cabang_List'
 import Cabang_Form from '../../screens/Cabang_Form'
 import Department_List from '../../screens/Department_List'
@@ -45,6 +47,11 @@ import Barang_List from '../../screens/Barang_List'
 import Barang_Form from '../../screens/Barang_Form'
 import Vendor_List from '../../screens/Vendor_List'
 import Vendor_Form from '../../screens/Vendor_Form'
+
+// -- TRANSAKSI -- 
+import Pembelian_List from '../../screens/Pembelian_List'
+
+
 const Aside = (props) => {
     const { visiblesidebar } = props //kalau tidak mau deklarasi, pakai props.visiblesidebar
 
@@ -184,7 +191,7 @@ const Aside = (props) => {
 
                             <MenuItem>
                                 <AiOutlineShop className="iconSubMenu" />
-                                <Link to="">
+                                <Link to="/pembelian-list">
                                     Pembelian
                                 </Link>
                             </MenuItem>
@@ -259,6 +266,8 @@ const Aside = (props) => {
                 <Route path={'/vendor-list'} component={Vendor_List} />
                 <Route path={'/vendor-create/:types'} component={Vendor_Form} />
                 <Route path={'/vendor-edit/:types/:unique'} component={Vendor_Form} />
+
+                <Route path={'/pembelian-list'} component={Pembelian_List} />
             </div>
 
 

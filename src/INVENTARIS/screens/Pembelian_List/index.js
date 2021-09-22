@@ -9,12 +9,12 @@ import firebase from '../../../firebaseAPI'
 import { setBarang, fetchBarangFromBackEndToRedux } from '../../redux'
 import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
-import { getBarangList, getBarangLimit, deleteBarang, getSearchBarang, getBarangPagination } from '../../helpers/requestBarang'
+import { getPembelianList, getPembelianLimit, deletePembelian, getSearchPembelian, getPembelianPagination } from '../../helpers/request_pembelian'
 import { paginationConverter } from '../../helpers/general'
+import moment from 'moment'
 import ButtonAdd from '../../components/ButtonAdd'
-function BarangList(props) {
-    const history = useHistory()
-    const { barangList, fetchBarangFromBackEndToRedux, setBarang } = props;
+function Pembelian_List(props) {
+    const [pembelianList, setPembelianList] = useState([])
     const [searchValue, setSearchValue] = useState('')
     const [valueLimit, setValueLimit] = useState(10)
     const [totalPage, setTotalPage] = useState()
@@ -23,41 +23,69 @@ function BarangList(props) {
     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5)
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
-
-
+    const [searchOption, setSearchOption] = useState('nama_vendor')
+    const loadData = () => {
+        getPembelianList({}).then((res) => {
+            console.log('pembelian list:', res)
+            setPembelianList(res.data)
+        })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
     const handleFilter = async (limit) => {
-        const params = {
-            nama_barang: searchValue,
-            limit: limit
+        var params = {}
+        if (searchOption === 'nama_vendor') {
+            params = {
+                nama_vendor: searchValue,
+                limit: limit
+            }
+        }
+        else {
+            params = {
+                nama_user: searchValue,
+                limit: limit
+            }
         }
         setValueLimit(limit)
-        const res = await getSearchBarang(params)
-        setBarang(res)
+        await getPembelianList(params).then((res) => {
+            setPembelianList(res.data)
+        })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        // setPembelianList(res.data)
     }
 
     const delCabang = (id) => {
-        deleteBarang({}, id)
+        deletePembelian({}, id)
         handleFilter(valueLimit)
     }
     const paginationFetch = (item) => {
         const params = {
             page: item
         }
-        getBarangPagination(params).then((res) => {
-            setBarang(res)
+        getPembelianPagination(params).then((res) => {
+            setPembelianList(res)
         })
             .catch((err) => {
                 console.log('Failed to request data cabang : ', err)
             })
     }
-    useEffect(() => {
-        getBarangPagination({ page: 1 }).then((res) => {
+
+    const getPagination = () => {
+        getPembelianPagination({ page: 1 }).then((res) => {
             setTotalPage(paginationConverter(res.totalRows))
 
         })
             .catch((err) => {
                 console.log('Failed to request data cabang : ', err)
             })
+    }
+    useEffect(() => {
+        getPagination()
+        loadData()
     }, [])
 
     const renderPagination = () => {
@@ -92,14 +120,15 @@ function BarangList(props) {
         <Container>
             <BreadCrumb link={
                 [
-                    { name: 'Master' },
-                    { name: 'Barang' }
+                    { name: 'Transaksi' },
+                    { name: 'Pembelian' }
                 ]
             } />
-            <ButtonAdd to={'/barang-create/create'}/>
+            <ButtonAdd to={'/barang-create/create'} />
             <div className="table-container">
                 <div className="table-card">
-                    <div>   <select onChange={(ev) => handleFilter(ev.target.value)}>
+                    <div>
+                        <select onChange={(ev) => handleFilter(ev.target.value)}>
                             <option value={10}>Entries 10</option>
                             <option value={20}>Entries 20</option>
                             <option value={30}>Entries 30</option>
@@ -107,31 +136,47 @@ function BarangList(props) {
 
 
                     </div>
+                    <select onChange={(ev) => setSearchOption(ev.target.value)}>
+                        <option value={'nama_vendor'}>Nama Vendor</option>
+                        <option value={'nama_user'}>Nama Employee</option>
 
-                    <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Barang'} style={{ textTransform: 'capitalize' }} />
+                    </select>
+                    <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Vendor'} style={{ textTransform: 'capitalize' }} />
 
                     <ButtonDirects backgroundcolor={'red'} label={'Cari'} onClick={() => handleFilter(valueLimit)} />
 
                     <table className="table-contain">
                         <thead>
                             <tr>
-                                <th>Nama Barang</th>
-                                <th>Satuan</th>
+                                <th>No</th>
+                                <th>Nama Vendor</th>
+                                <th>Nama Employee</th>
+                                <th>Tanggal Pembelian</th>
+                                <th>Total Pembelian</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {barangList?.map((item, index) => { //looping data di redux                            
+                            {pembelianList?.map((item, index) => { //looping data di redux                            
                                 return (
-                                    <tr key={index}>                                      
+                                    <tr key={index}>
                                         <td>
-                                            <span>{item.nama_barang}</span>
+                                            <span>{index + 1}</span>
                                         </td>
                                         <td>
-                                            <span>{item.satuan}</span>
-                                        </td>                                      
-                                       
+                                            <span>{item.nama_vendor}</span>
+                                        </td>
+                                        <td>
+                                            <span>{item.nama_user}</span>
+                                        </td>
+                                        <td>
+                                            <span>{moment(item.tgl_pembelian).format('DD-MM-YYYY')}</span>
+                                        </td>
+                                        <td>
+                                            <span>{item.total_pembelian}</span>
+                                        </td>
+
                                         <td>
                                             <button>
                                                 <Link to={'/barang-edit/edit/' + item.id}>
@@ -172,10 +217,6 @@ function BarangList(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        barangList: state.generalReducer.barang.data
-    }
-}
 
-export default connect(mapStateToProps, { setBarang, fetchBarangFromBackEndToRedux })(BarangList)
+
+export default Pembelian_List

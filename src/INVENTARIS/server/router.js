@@ -8,7 +8,10 @@ var user = require('./routes/user')
 var barang = require('./routes/barang')
 var vendor = require('./routes/vendor')
 var login = require('./routes/Login')
+
+var pembelian = require('./routes/Pembelian')
 var multer = require('multer')
+
 var tokenGenerator = require('./routes/TokenGenerator')
 var uploadImage = require('./routes/UploadImages')
 var uploadMusic = require('./routes/UploadMusic')
@@ -35,6 +38,8 @@ app.use('/user', user)
 app.use('/barang', barang) 
 app.use('/vendor', vendor) 
 app.use('/userlogin', login) 
+app.use('/pembelian', pembelian) 
+
 app.use('/files', uploadImage)
 app.use('/music', uploadMusic)
 
