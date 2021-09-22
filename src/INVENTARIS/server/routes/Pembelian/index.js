@@ -30,7 +30,7 @@ router
             }
             else {                
                 var paramQuery = Object.entries(req.query)
-                var paramObject = paramQuery[0]               
+                var paramObject = paramQuery[0] || ''               
                 var query = paramObject ?
                 `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
                 ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`

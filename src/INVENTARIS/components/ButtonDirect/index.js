@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom'
 function ButtonDirect(props){
     const {label} = props
     return(        
-        <Link {...props}>
+        <button {...props}>
           {label}
-        </Link>
+        </button>
     )
 }
 

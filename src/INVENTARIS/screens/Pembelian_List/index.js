@@ -124,7 +124,7 @@ function Pembelian_List(props) {
                     { name: 'Pembelian' }
                 ]
             } />
-            <ButtonAdd to={'/barang-create/create'} />
+            <ButtonAdd to={'/pembelian-create/create'} />
             <div className="table-container">
                 <div className="table-card">
                     <div>
