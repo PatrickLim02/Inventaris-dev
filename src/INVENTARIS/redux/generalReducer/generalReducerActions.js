@@ -25,7 +25,7 @@ export const setCabang = (payload) => {
 
 export const fetchCabangFromBackEndToRedux = () => {
   return async (dispatch) => {
-    getCabangList().then((res) => {
+    getCabangList()?.then((res) => {
       dispatch(setCabang(res))
     })
    .catch((err) => {
