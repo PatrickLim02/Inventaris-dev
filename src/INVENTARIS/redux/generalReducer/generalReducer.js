@@ -3,35 +3,28 @@ import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_VENDOR, SET_USER, SET_BARANG}
 
 const initialState = {
     sidebar : {
-        visible: false,
-    },
+        visible: false},
 
     cabang :{
-        
-    }
 
-    ,
+    },
 
     department :{
-       
-    }
 
-    ,
+    },
 
     user :{
-
-    }
-    ,
+        visibleModal: false,
+        data:{} 
+    },
 
     barang :{
 
-    }
-    ,
+    },
 
     vendor :{
-        data:[
-           
-        ]
+        visibleModal: false,
+        data:{}        
     }
 }
 

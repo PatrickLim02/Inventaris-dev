@@ -14,3 +14,6 @@ export const paginationConverter = (value) =>{
     const totalPage = Math.ceil(divider)
     return totalPage;
 }
+
+
+
