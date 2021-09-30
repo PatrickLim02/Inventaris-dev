@@ -115,9 +115,9 @@ function EmployeeList(props) {
                             </tr>
                         </thead>
 
-                        <tbody>
-
-                            {userList?.map((item, index) => { //looping data di redux                                
+                        <tbody> 
+                                    {console.log('user list: ', userList)}
+                            {/* {userList?.data?.map((item, index) => { //looping data di redux                                
                                 return (
                                     <tr>
                                         <td>
@@ -148,7 +148,7 @@ function EmployeeList(props) {
                                         </td>
                                     </tr>
                                 )
-                            })}
+                            })} */}
                         </tbody>
 
                     </table>
@@ -161,7 +161,7 @@ function EmployeeList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        userList: state.generalReducer.user.data,
+        userList: state.generalReducer.user,
         cabangList: state.generalReducer.cabang.data,
         departmentList: state.generalReducer.department.data
     }

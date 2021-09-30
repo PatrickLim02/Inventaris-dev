@@ -1,31 +1,40 @@
 
-import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_VENDOR, SET_USER, SET_BARANG} from './generalReducerTypes'
+import {SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_VENDOR, SET_USER, SET_BARANG, SET_PEMBELIAN} from './generalReducerTypes'
 
 const initialState = {
     sidebar : {
         visible: false},
 
     cabang :{
-
+        data:[]
     },
 
     department :{
-
+        data:[]
     },
 
     user :{
         visibleModal: false,
-        data:{} 
+        data:[]
     },
 
     barang :{
         visibleModal: false,
-        data:{} 
+        data:[]
     },
 
     vendor :{
         visibleModal: false,
-        data:{}        
+        data:[]       
+    },
+
+    pembelian:{
+        employeeModalVisible : false,
+        barangModalVisible : false,
+        vendorModalVisible : false,
+        vendorItem:{},
+        employeeItem:{},
+        barangItem: {},
     }
 }
 
@@ -76,6 +85,13 @@ const generalReducer = (state = initialState, action) =>{
             ...state,
             vendor: {
                 ...state.vendor,
+                ...action.payload
+            }
+        }
+        case SET_PEMBELIAN: return {
+            ...state,
+            pembelian: {
+                ...state.pembelian,
                 ...action.payload
             }
         }

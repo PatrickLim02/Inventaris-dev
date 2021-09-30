@@ -3,23 +3,23 @@ import Modal from 'react-animated-modal'
 import { styles } from './styles.js'
 import { connect } from 'react-redux'
 
-import { setBarang } from '../../redux'
+import { setBarang, setPembelian } from '../../redux'
 
 function BarangModal(props) {
     const [selectedItem, setSelectedItem] = useState()
     const [barangItem, setBarangItem] = useState()
-    const { barangList, setBarang } = props
+    const { barangList, setBarang, setPembelian, pembelian } = props
 
     const selectBarang = (index, item) => {
         setSelectedItem(index)
         setBarangItem(item)
     }
     const handleSelectButton = () => {
-        setBarang({ visibleModal: false, barangItem })
+        setPembelian({ barangModalVisible: false, barangItem })
     }
 
 
-    if (!barangList?.visibleModal) {
+    if (!pembelian?.barangModalVisible) {
         return null
     }
     else {
@@ -56,7 +56,8 @@ function BarangModal(props) {
 const mapStateToProps = (state) => {
     return {
         expiredToken: state.Authorization.token,
-        barangList: state.generalReducer.barang
+        barangList: state.generalReducer.barang,
+        pembelian: state.generalReducer.pembelian
     }
 }
-export default connect(mapStateToProps, { setBarang })(BarangModal)
+export default connect(mapStateToProps, { setBarang, setPembelian })(BarangModal)

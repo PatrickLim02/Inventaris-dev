@@ -25,17 +25,6 @@ function BarangList(props) {
     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0)
     const [firstPage, setFirstPage] = useState(1)
 
-    const fetchApi = () =>{
-        fetch("https://jsonplaceholder.typicode.com/todos")
-        .then(response => response.json())
-        .then((res) =>{
-            console.log('todos: ', res)
-        })
-        .catch(err =>{
-            console.log(err)
-        })
-    }
-    fetchApi()
     const handleFilter = async (limit) => {
         const params = {
             nama_barang: searchValue,

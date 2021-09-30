@@ -1,4 +1,4 @@
-import { SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR, SET_BARANG } from './generalReducerTypes'
+import { SET_ASIDE, SET_CABANG, SET_DEPARTMENT, SET_USER, SET_VENDOR, SET_BARANG, SET_PEMBELIAN } from './generalReducerTypes'
 import { getDepartment, getVendor } from '../../helpers/requestFirebase'
 import { getCabangList } from '../../helpers/requestCabang'
 import { getDeptList } from '../../helpers/requestDept'
@@ -88,5 +88,13 @@ export const fetchBarangFromBackEndToRedux = () => {
   return async (dispatch) => {
     const res = await getBarangList()
     dispatch(setBarang(res))
+  }
+}
+
+
+export const setPembelian = (payload) =>{
+  return {
+    type: SET_PEMBELIAN,
+    payload,
   }
 }

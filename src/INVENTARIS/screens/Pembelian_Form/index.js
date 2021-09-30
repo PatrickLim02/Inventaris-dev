@@ -10,10 +10,22 @@ import {createPembelian, editPembelian} from '../../helpers/request_pembelian'
 import KeranjangPembelian from '../../components/KeranjangPembelian'
 function PembelianForm(props) {
     const { types, id } = props.match.params; //Harus sama dengan yang di router
-    const [data, setData] = useState([])
+    const [keranjang, setKeranjang] = useState([])
 
     const callBackPembelian = (value) =>{ 
-        setData([...data, value])
+        console.log('value: ', value)
+        console.log('data: ', keranjang)
+      if(keranjang?.length > 0){ // kalau keranjang sudah berisi
+        if(value.id_vendor === keranjang[keranjang?.length - 1]?.id_vendor && value.id_employee === keranjang[keranjang?.length - 1]?.id_employee){
+            setKeranjang([...keranjang, value])
+        }
+        else{
+            alert('Vendor / Employee Tidak Boleh Berbeda')
+        } 
+      }
+      else{
+        setKeranjang([...keranjang, value])
+      }
     }
     return (
         <div>
@@ -27,7 +39,7 @@ function PembelianForm(props) {
             } />
 
             <FormCreatePembelian callBackPembelian={callBackPembelian}/>
-            <KeranjangPembelian keranjangList = {data} />
+            <KeranjangPembelian keranjangList = {keranjang} />
            
         </div>
     )

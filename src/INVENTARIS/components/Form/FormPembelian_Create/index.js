@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { retrieveVendorItem } from '../../../helpers/general'
-import { setVendor, setUser, setBarang } from '../../../redux'
+import { setPembelian } from '../../../redux'
 function FormPembelian_Create(props) {
-    const { setVendor, selectedVendor, setUser, selectedUser, setBarang, selectedBarang, callBackPembelian } = props
+    const { setPembelian, selectedVendor, selectedEmployee, selectedBarang, callBackPembelian } = props
     const { handleSubmitFirebase } = props
-    const [namaVendor, setNamaVendor] = useState('')
-    const [namaEmployee, setNamaEmployee] = useState('')
+    const [idVendor, setIdVendor] = useState('')
+    const [idEmployee, setIdEmployee] = useState('')
     const [tglPembelian, setTglPembelian] = useState('')
     const [grandTotal, setGrandTotal] = useState(0)
     const [harga, setHarga] = useState(0)
@@ -15,15 +15,15 @@ function FormPembelian_Create(props) {
     const [keterangan, setKeterangan] = useState('')
 
     const selectVendorModal = () => {
-        setVendor({ visibleModal: true })
+        setPembelian({ vendorModalVisible: true })
     }
 
     const selectEmployeeModal = () => {
-        setUser({ visibleModal: true })
+        setPembelian({ employeeModalVisible: true })
     }
 
     const selectBarangModal = () => {
-        setBarang({ visibleModal: true })
+        setPembelian({ barangModalVisible: true })
     }
 
     const calculateSubtotal = (harga, qty) => {
@@ -32,8 +32,10 @@ function FormPembelian_Create(props) {
         const total = harga * qty
         setSubtotal(total)
     }
-    const createBarang = () => {
+    const addBarang = () => {
         const params = {
+            id_employee : selectedEmployee.id,
+            id_vendor: selectedVendor.id,
             id_barang: selectedBarang?.id,
             nama_barang: selectedBarang?.nama_barang,
             harga: harga,
@@ -41,14 +43,13 @@ function FormPembelian_Create(props) {
             subtotal: subtotal,
             keterangan: keterangan,
         }
+        console.log('Params: ', params)
         callBackPembelian(params)
     }
 
     return (
         <div>
-            <button onClick ={createBarang}>
-                SAVE PEMBELIAN
-            </button>
+
             <dl>
                 <dt>
                     <label>Pilih Vendor</label>
@@ -80,7 +81,7 @@ function FormPembelian_Create(props) {
                     <button onClick={selectEmployeeModal}>...</button>
                 </dt>
                 <dd>
-                    <input value={selectedUser?.nama_user} type="text" placeholder="Nama Employee" />
+                    <input value={selectedEmployee?.nama_user} type="text" placeholder="Nama Employee" />
                 </dd>
             </dl>
 
@@ -89,7 +90,7 @@ function FormPembelian_Create(props) {
                     <label>Department</label>
                 </dt>
                 <dd>
-                    <input value={selectedUser?.department} type="text" placeholder="Department" />
+                    <input value={selectedEmployee?.department} type="text" placeholder="Department" />
                 </dd>
             </dl>
 
@@ -98,7 +99,7 @@ function FormPembelian_Create(props) {
                     <label>Cabang</label>
                 </dt>
                 <dd>
-                    <input value={selectedUser?.cabang} type="text" placeholder="Cabang" />
+                    <input value={selectedEmployee?.cabang} type="text" placeholder="Cabang" />
                 </dd>
             </dl>
             <dl>
@@ -181,7 +182,7 @@ function FormPembelian_Create(props) {
                 </dd>
             </dl>
 
-            <button onClick ={createBarang}>
+            <button onClick ={addBarang}>
                 Add Barang
             </button>
 
@@ -191,9 +192,9 @@ function FormPembelian_Create(props) {
 
 const mapStateToProps = (state) => {
     return {
-        selectedVendor: state.generalReducer.vendor.vendorItem,
-        selectedUser: state.generalReducer.user.employeeItem,
-        selectedBarang: state.generalReducer.barang.barangItem,
+        selectedVendor: state.generalReducer.pembelian.vendorItem,
+        selectedEmployee: state.generalReducer.pembelian.employeeItem,
+        selectedBarang: state.generalReducer.pembelian.barangItem,
     }
 }
-export default connect(mapStateToProps, { setVendor, setUser, setBarang })(FormPembelian_Create);
+export default connect(mapStateToProps, { setPembelian })(FormPembelian_Create);

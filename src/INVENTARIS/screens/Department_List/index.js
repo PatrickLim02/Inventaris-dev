@@ -6,6 +6,8 @@ import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'
 import { deleteDepartment, getDepartmentLimit, getSearchDept } from '../../helpers/requestDept'
 import { setDepartment, fetchDepartmentFromBackEndToRedux } from '../../redux'
+import GridTable from '@nadavshaar/react-grid-table'
+
 function DepartmentList(props) {
     const { departmentList, fetchDepartmentFromBackEndToRedux, setDepartment } = props;
     const [namaTable, setNamaTable] = useState('Department')
@@ -25,9 +27,25 @@ function DepartmentList(props) {
         setDepartment(res)
     }
 
-    useEffect(() => {
-          
-    },[])
+    const headerColumns = [
+        {
+            id: 1,
+            field: 'kode_department',
+            label: 'Kode Department'
+        },
+        {
+            id: 2,
+            field: 'nama_department',
+            label: 'Nama Department'
+        },
+        {
+            id: 3,
+            field: 'status',
+            label: 'Status'
+        },
+    ]
+
+    
     return (
         <div>
             <BreadCrumb link={
@@ -57,8 +75,9 @@ function DepartmentList(props) {
                     
                     <button onClick={() => handleFilter(valueLimit)}>Cari</button>
 
+                    <GridTable columns={headerColumns} rows={departmentList}/>
 
-                    <table className="table-contain">
+                    {/* <table className="table-contain">
                         <thead>
                             <tr>
                                 <th>Kode Department</th>
@@ -98,7 +117,7 @@ function DepartmentList(props) {
                             })}
                         </tbody>
 
-                    </table>
+                    </table> */}
                 </div>
             </div>
         </div>

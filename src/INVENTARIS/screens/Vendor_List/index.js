@@ -32,47 +32,7 @@ function VendorList(props) {
         handleFilter(valueLimit)
     }
 
-    const headerColumns = [
-        {
-            id: 1,
-            field: 'Nama Vendor',
-            label: 'Nama Vendor'
-        },
-        {
-            id: 2,
-            field: 'Alamat',
-            label: 'Alamat'
-        },
-        {
-            id: 3,
-            field: 'Telepon',
-            label: 'Telepon'
-        },
-        {
-            id: 4,
-            field: 'Status',
-            label: 'Status'
-        },
-        {
-            id: 5,
-            field: 'Action',
-            label: 'Action'
-        },
-    ]
-
-    const rowsData = [vendorList?.map((item, index) => {
-        <ul key={index}>
-            <li>{item.nama_vendor}</li>
-            <li>{item.alamt}</li>
-            <li>{item.telepon}</li>
-            <li>{(item.status === 0? 'Tidak Aktif' : 'Aktif')}</li>
-            <li>{item.action}</li>
-        </ul>
-
-    })]
-
-
-
+   
     return (
         <Container>
             <BreadCrumb link={
@@ -100,9 +60,6 @@ function VendorList(props) {
 
                     <ButtonDirects backgroundcolor={'red'} label={'Cari'} onClick={() => handleFilter(valueLimit)} />
 
-
-
-                    <GridTable columns={headerColumns} rows={rowsData}/>
 
                     <table className="table-contain">
                         <thead>

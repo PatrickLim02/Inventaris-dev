@@ -3,23 +3,23 @@ import Modal from 'react-animated-modal'
 import { styles } from './styles.js'
 import { connect } from 'react-redux'
 
-import {setVendor} from '../../redux'
+import {setPembelian, setVendor} from '../../redux'
 
 function VendorModal(props) {
     const [selectedItem, setSelectedItem] = useState()
     const [vendorItem, setVendorItem]= useState()
-    const { vendorList, setVendor } = props
+    const { vendorList, setPembelian, setVendor, pembelian } = props
 
     const selectVendor = (index, item) =>{
         setSelectedItem(index)
         setVendorItem(item)
     }
     const handleSelectButton = () =>{
-        setVendor({visibleModal: false, vendorItem})
+        setPembelian({vendorModalVisible: false, vendorItem})
     }
 
  
-    if (!vendorList?.visibleModal) {
+    if (!pembelian?.vendorModalVisible) {
         return null
     }
     else {
@@ -57,7 +57,8 @@ function VendorModal(props) {
 const mapStateToProps = (state) => {
     return {
         expiredToken: state.Authorization.token,
-        vendorList: state.generalReducer.vendor
+        vendorList: state.generalReducer.vendor,
+        pembelian: state.generalReducer.pembelian,
     }
 }
-export default connect(mapStateToProps, {setVendor})(VendorModal)
+export default connect(mapStateToProps, {setVendor, setPembelian})(VendorModal)

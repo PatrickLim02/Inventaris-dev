@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 import Modal from 'react-animated-modal'
 import { styles } from './styles.js'
 import { connect } from 'react-redux'
-import {setUser} from '../../redux'
+import {setPembelian, setUser} from '../../redux'
 
 function EmployeeModal(props) {
     const [selectedItem, setSelectedItem] = useState()
     const [employeeItem, setEmployeeItem]= useState()
-    const { employeeList, setUser } = props
+    const { employeeList, setUser, pembelian, setPembelian } = props
 
     const selectEmployee = (index, item) =>{
         setSelectedItem(index)
         setEmployeeItem(item)
     }
     const handleSelectButton = () =>{
-        setUser({visibleModal: false, employeeItem})
+        setPembelian({employeeModalVisible: false, employeeItem})
     }
 
  
-    if (!employeeList?.visibleModal) {
+    if (!pembelian?.employeeModalVisible) {
         return null
     }
     else {
@@ -56,7 +56,8 @@ function EmployeeModal(props) {
 const mapStateToProps = (state) => {
     return {
         expiredToken: state.Authorization.token,
-        employeeList: state.generalReducer.user
+        employeeList: state.generalReducer.user, 
+        pembelian: state.generalReducer.pembelian,
     }
 }
-export default connect(mapStateToProps, {setUser})(EmployeeModal)
+export default connect(mapStateToProps, {setUser, setPembelian})(EmployeeModal)

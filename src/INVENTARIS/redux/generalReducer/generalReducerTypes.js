@@ -4,3 +4,4 @@ export const SET_DEPARTMENT = 'SET_DEPARTMENT';
 export const SET_USER = 'SET_USER';
 export const SET_VENDOR = 'SET_VENDOR';
 export const SET_BARANG = 'SET_BARANG'
+export const SET_PEMBELIAN = 'SET_PEMBELIAN'
