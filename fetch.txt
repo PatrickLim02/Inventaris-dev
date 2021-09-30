@@ -1,0 +1,22 @@
+const fetchApi = () =>{
+        axios.get("https://jsonplaceholder.typicode.com/todos").then((res) =>{
+            console.log('todos: ', res.data)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+    fetchApi()
+
+
+
+  const fetchApi = () =>{
+        fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(response => response.json())
+        .then((res) =>{
+            console.log('todos: ', res)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }

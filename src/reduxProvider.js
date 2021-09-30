@@ -7,14 +7,20 @@ import Sidebar from './INVENTARIS'
 import TokenModal from './INVENTARIS/components/ExpiredTokenModal'
 import VendorModal from './INVENTARIS/components/SelectVendorModal'
 import EmployeeModal from './INVENTARIS/components/SelectEmployeeModal'
+import BarangModal from './INVENTARIS/components/SelectBarangModal'
 function ReduxProvider (){
     
     return (
         <Provider store={store}>
-             <EmployeeModal />
+            <EmployeeModal />
             <VendorModal />
+            <BarangModal />
             <TokenModal />
+
+
+            
             <Navigations />
+           
         </Provider>
       
     )

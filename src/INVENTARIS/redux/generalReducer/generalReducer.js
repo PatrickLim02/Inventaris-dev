@@ -19,7 +19,8 @@ const initialState = {
     },
 
     barang :{
-
+        visibleModal: false,
+        data:{} 
     },
 
     vendor :{

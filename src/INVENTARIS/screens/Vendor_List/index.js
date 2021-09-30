@@ -9,6 +9,7 @@ import firebase from '../../../firebaseAPI'
 import { setVendor, fetchVendorFromBackEndToRedux } from '../../redux'
 import { Container, ButtonDirects } from '../../components/components'
 import { getVendorList, getVendorLimit, deleteVendor, getSearchVendor } from '../../helpers/requestVendor'
+import GridTable from '@nadavshaar/react-grid-table'
 
 function VendorList(props) {
     const { vendorList, fetchVendorFromBackEndToRedux, setVendor } = props;
@@ -30,6 +31,47 @@ function VendorList(props) {
         deleteVendor({}, id)
         handleFilter(valueLimit)
     }
+
+    const headerColumns = [
+        {
+            id: 1,
+            field: 'Nama Vendor',
+            label: 'Nama Vendor'
+        },
+        {
+            id: 2,
+            field: 'Alamat',
+            label: 'Alamat'
+        },
+        {
+            id: 3,
+            field: 'Telepon',
+            label: 'Telepon'
+        },
+        {
+            id: 4,
+            field: 'Status',
+            label: 'Status'
+        },
+        {
+            id: 5,
+            field: 'Action',
+            label: 'Action'
+        },
+    ]
+
+    const rowsData = [vendorList?.map((item, index) => {
+        <ul key={index}>
+            <li>{item.nama_vendor}</li>
+            <li>{item.alamt}</li>
+            <li>{item.telepon}</li>
+            <li>{(item.status === 0? 'Tidak Aktif' : 'Aktif')}</li>
+            <li>{item.action}</li>
+        </ul>
+
+    })]
+
+
 
     return (
         <Container>
@@ -57,6 +99,10 @@ function VendorList(props) {
                     <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Vendor'} style={{ textTransform: 'capitalize' }} />
 
                     <ButtonDirects backgroundcolor={'red'} label={'Cari'} onClick={() => handleFilter(valueLimit)} />
+
+
+
+                    <GridTable columns={headerColumns} rows={rowsData}/>
 
                     <table className="table-contain">
                         <thead>

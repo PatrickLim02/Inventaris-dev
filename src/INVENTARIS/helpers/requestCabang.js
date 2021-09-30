@@ -27,7 +27,6 @@ export const getCabangLimit = (params = {}, limit) => {
   });
 };
 
-
 export const getCabangDetail = (params = {}, id) => {
   return Wrap({
     url: '/cabang/detail/' + id,
