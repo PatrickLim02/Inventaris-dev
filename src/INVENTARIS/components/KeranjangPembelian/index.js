@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { useHistory } from 'react-router'
-
-import BreadCrumb from '../../components/BreadCrumb'
-import Dropdown from '../../components/Dropdown'
-import { Link } from 'react-router-dom'
-import firebase from '../../../firebaseAPI'
-import { setBarang, fetchBarangFromBackEndToRedux } from '../../redux'
-import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
-import { getPembelianList, getPembelianLimit, deletePembelian, getSearchPembelian, getPembelianPagination } from '../../helpers/request_pembelian'
-import { paginationConverter } from '../../helpers/general'
-import moment from 'moment'
-import ButtonAdd from '../../components/ButtonAdd'
+
+import {createPembelian} from '../../helpers/request_pembelian'
+
 function KeranjangPembelian(props) {
-    const {keranjangList} = props
+    const {keranjangList, reload} = props
     
+    const  handleSubmit = async() =>{
+        window.location.reload()
+        const response = await createPembelian(keranjangList)    
+    }   
     return (
         <Container>
-           
+           <button onClick={handleSubmit}>Save</button>
+
             <div className="table-container">
                 <div className="table-card">                        
                     <table className="table-contain">

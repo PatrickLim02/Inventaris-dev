@@ -94,32 +94,65 @@ router
 router
     .route('/create')
     .post((req, res) => {
-        var data = {  //Ini diusahakan harus sama dengan kolom di database
-            id_vendor: req.body.id_vendor || '',
-            id_employee: req.body.id_employee || '',
-            tgl_pembelian: req.body.tgl_pembelian || '',
-            total_pembelian: req.body.total_pembelian || '',
-                   }
-
-        console.log(data)
-        for (var i = 0; i <= Object.keys(data).length; i++) {
-            const keys = Object.keys(data)[i]
-            const values = Object.values(data)[i]
-            if (values === '') {
+        let grandTotal = req.body.reduce(function(accumulation, item){
+            return accumulation + item.subtotal
+        },0)
+      
+        var data={
+            id_vendor: req.body[0].id_vendor,
+            id_employee: req.body[0].id_employee,
+            tgl_pembelian: req.body[0].tgl_pembelian,
+            total_pembelian : grandTotal,
+        }
+        server.query("insert into pembelian_header SET ?", data,(err, results)=>{
+            if(results){
+                   server.query(`select * from pembelian_header where id_vendor = '${data.id_vendor}' and id_employee = '${data.id_employee}' and tgl_pembelian = '${data.tgl_pembelian}' `, (err, row)=>{
+                       if (err){
+                        res.status(400).json({
+                            status:400,
+                            message:err
+                        })
+                       }
+                       else{
+                           console.log('ID Pembelian: ', row)
+                           for(var i = 0; i < req.body.length;i++){
+                               const dataDetails={
+                                   id_pembelian: row[0].id,
+                                   id_barang: req.body[i].id_barang,
+                                   harga: req.body[i].harga,
+                                   qty: req.body[i].qty,
+                                   keterangan: req.body[i].keterangan
+                               }
+                              server.query('insert into pembelian_detail SET ?', dataDetails, (err, results)=>{
+                                try{
+                                    if(err){
+                                        res.status(400).json({
+                                            status:400,
+                                            message:err
+                                        })
+                                    }
+                                    else{
+                                        res.status(200).json({
+                                            status:200,
+                                            data:results,
+                                            
+                                        })
+                                    }
+                                }
+                                catch(err){
+                                    console.log(err)
+                                }
+                              })
+                           }
+                       }
+                   })         
+            }
+            else{
                 res.status(400).json({
                     status: 400,
-                    message: `field ${keys.replace('_', ' ')} tidak boleh kosong`
+                    message: err
                 })
-                return ''; // Agar code tidak lanjut kebawah
             }
-        }
-        server.query("INSERT INTO pembelian_header SET ? ", data, (err, result) => {
-            res.status(200).json({ // Untuk return value dari hasil submit
-                status: result,
-                data: data,
-                message: 'Data Berhasil Ditambahkan'
-            })
-
         })
     })
 

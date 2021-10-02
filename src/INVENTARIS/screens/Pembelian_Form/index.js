@@ -16,17 +16,18 @@ function PembelianForm(props) {
         console.log('value: ', value)
         console.log('data: ', keranjang)
       if(keranjang?.length > 0){ // kalau keranjang sudah berisi
-        if(value.id_vendor === keranjang[keranjang?.length - 1]?.id_vendor && value.id_employee === keranjang[keranjang?.length - 1]?.id_employee){
+        if(value.id_vendor === keranjang[keranjang?.length - 1]?.id_vendor && value.id_employee === keranjang[keranjang?.length - 1]?.id_employee && value.tgl_pembelian === keranjang[keranjang?.length -1]?.tgl_pembelian){
             setKeranjang([...keranjang, value])
         }
         else{
-            alert('Vendor / Employee Tidak Boleh Berbeda')
+            alert('Vendor / Employee / Tgl Pembelian Tidak Boleh Berbeda')
         } 
       }
       else{
         setKeranjang([...keranjang, value])
       }
     }
+
     return (
         <div>
             <BreadCrumb link={

@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { retrieveVendorItem } from '../../../helpers/general'
 import { setPembelian } from '../../../redux'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment'
+
 function FormPembelian_Create(props) {
     const { setPembelian, selectedVendor, selectedEmployee, selectedBarang, callBackPembelian } = props
     const { handleSubmitFirebase } = props
@@ -13,6 +17,7 @@ function FormPembelian_Create(props) {
     const [qty, setQty] = useState(0)
     const [subtotal, setSubtotal] = useState(0)
     const [keterangan, setKeterangan] = useState('')
+    const [date, setDate] = useState(new Date())
 
     const selectVendorModal = () => {
         setPembelian({ vendorModalVisible: true })
@@ -42,6 +47,7 @@ function FormPembelian_Create(props) {
             qty: qty,
             subtotal: subtotal,
             keterangan: keterangan,
+            tgl_pembelian: moment(date).format('DD-MM-YYYY hh:mm:ss')
         }
         console.log('Params: ', params)
         callBackPembelian(params)
@@ -49,7 +55,6 @@ function FormPembelian_Create(props) {
 
     return (
         <div>
-
             <dl>
                 <dt>
                     <label>Pilih Vendor</label>
@@ -107,7 +112,7 @@ function FormPembelian_Create(props) {
                     <label>Tanggal Pembelian</label>
                 </dt>
                 <dd>
-                    <input onChange={(ev) => setTglPembelian(ev.target.value)} type="text" placeholder="Tanggal Pembelian" />
+                    <DatePicker selected={date} onChange={(date) => setDate(date)}></DatePicker>
                 </dd>
             </dl>
             <dl>
