@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2021 at 04:47 PM
+-- Generation Time: Oct 03, 2021 at 06:08 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -105,14 +105,38 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `kode_department`, `nama_department`, `status`) VALUES
-(1, 'IT', 'Information & Technology', 1),
-(5, 'SLA', 'Sales Admin', 1),
-(6, 'SVA', 'Service Admin', 1),
 (7, 'SPA', 'Sparepart Admin', 1),
 (8, 'SPV', 'Supervisor', 1),
-(10, 'HRD', 'Human Resources Departmen', 1),
 (16, 'SCO', 'Sales Consultant', 1),
-(19, 'ACC', 'Accounting', 1);
+(19, 'ACC', 'Accounting', 1),
+(20, 'SPA', 'Sparepart Admin', 1),
+(21, 'SPV', 'Supervisor', 1),
+(22, 'SCO', 'Sales Consultant', 1),
+(23, 'ACC', 'Accounting', 1),
+(24, 'SPA', 'Sparepart Admin', 1),
+(25, 'SPV', 'Supervisor', 1),
+(26, 'SCO', 'Sales Consultant', 1),
+(27, 'ACC', 'Accounting', 1),
+(28, 'SPA', 'Sparepart Admin', 1),
+(29, 'SPV', 'Supervisor', 1),
+(30, 'SCO', 'Sales Consultant', 1),
+(31, 'ACC', 'Accounting', 1),
+(32, 'SPA', 'Sparepart Admin', 1),
+(33, 'SPV', 'Supervisor', 1),
+(34, 'SCO', 'Sales Consultant', 1),
+(35, 'ACC', 'Accounting', 1),
+(36, 'SPA', 'Sparepart Admin', 1),
+(37, 'SPV', 'Supervisor', 1),
+(38, 'SCO', 'Sales Consultant', 1),
+(39, 'ACC', 'Accounting', 1),
+(40, 'SPA', 'Sparepart Admin', 1),
+(41, 'SPV', 'Supervisor', 1),
+(42, 'SCO', 'Sales Consultant', 1),
+(43, 'ACC', 'Accounting', 1),
+(44, 'SPA', 'Sparepart Admin', 1),
+(45, 'SPV', 'Supervisor', 1),
+(46, 'SCO', 'Sales Consultant', 1),
+(47, 'ACC', 'Accounting', 1);
 
 -- --------------------------------------------------------
 
@@ -159,6 +183,30 @@ INSERT INTO `music` (`id`, `namafilemusic`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pembelian_detail`
+--
+
+CREATE TABLE `pembelian_detail` (
+  `id` int(11) NOT NULL,
+  `id_pembelian` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `harga` int(50) NOT NULL,
+  `qty` int(5) NOT NULL,
+  `keterangan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pembelian_detail`
+--
+
+INSERT INTO `pembelian_detail` (`id`, `id_pembelian`, `id_barang`, `harga`, `qty`, `keterangan`) VALUES
+(0, 17, 1, 25000, 2, 'Test'),
+(0, 17, 2, 22000, 1, 'Test'),
+(0, 17, 3, 22000, 3, 'Test');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pembelian_header`
 --
 
@@ -166,7 +214,7 @@ CREATE TABLE `pembelian_header` (
   `id` int(11) NOT NULL,
   `id_vendor` int(11) NOT NULL,
   `id_employee` int(11) NOT NULL,
-  `tgl_pembelian` date NOT NULL,
+  `tgl_pembelian` varchar(50) NOT NULL,
   `total_pembelian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -175,8 +223,7 @@ CREATE TABLE `pembelian_header` (
 --
 
 INSERT INTO `pembelian_header` (`id`, `id_vendor`, `id_employee`, `tgl_pembelian`, `total_pembelian`) VALUES
-(1, 1, 1, '2021-09-19', 500000),
-(2, 3, 4, '2021-09-19', 650000);
+(17, 1, 1, '01-10-2021 08:32:42', 138000);
 
 -- --------------------------------------------------------
 
@@ -343,7 +390,7 @@ ALTER TABLE `cabang`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `image`
@@ -361,7 +408,7 @@ ALTER TABLE `music`
 -- AUTO_INCREMENT for table `pembelian_header`
 --
 ALTER TABLE `pembelian_header`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user`

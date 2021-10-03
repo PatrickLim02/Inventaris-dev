@@ -116,8 +116,8 @@ function EmployeeList(props) {
                         </thead>
 
                         <tbody> 
-                                    {console.log('user list: ', userList)}
-                            {/* {userList?.data?.map((item, index) => { //looping data di redux                                
+                                   
+                            {userList?.data?.map((item, index) => { //looping data di redux                                
                                 return (
                                     <tr>
                                         <td>
@@ -148,7 +148,7 @@ function EmployeeList(props) {
                                         </td>
                                     </tr>
                                 )
-                            })} */}
+                            })}
                         </tbody>
 
                     </table>

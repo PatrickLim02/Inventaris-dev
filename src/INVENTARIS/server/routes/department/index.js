@@ -12,8 +12,7 @@ router
     .get((req, res) => {
         var paramQuery = Object.entries(req.query)
         var paramObject = paramQuery[0]
-        var query = paramObject ? `select * from department where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from department limit 5'
-        console.log('/cabang: ', query)
+        var query = paramObject ? `select * from department where ${paramObject[0]} like '%${paramObject[1]}%'` : 'Select * from department'
         server.query(query, (err, rows) => {
             if (err) {
                 res.status(400).json({

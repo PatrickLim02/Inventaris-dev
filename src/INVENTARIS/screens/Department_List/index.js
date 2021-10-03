@@ -6,16 +6,18 @@ import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'
 import { deleteDepartment, getDepartmentLimit, getSearchDept } from '../../helpers/requestDept'
 import { setDepartment, fetchDepartmentFromBackEndToRedux } from '../../redux'
-import GridTable from '@nadavshaar/react-grid-table'
+import { AgGridReact, AgGridColumn } from 'ag-grid-react'
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 function DepartmentList(props) {
     const { departmentList, fetchDepartmentFromBackEndToRedux, setDepartment } = props;
-    const [namaTable, setNamaTable] = useState('Department')
     const [valueLimit, setValueLimit] = useState(5)
     const [searchValue, setSearchValue] = useState('')
+    const [entries, setEntries] = useState(10)
     const del = (id) => {
+        window.location.reload()
         deleteDepartment({}, id)
-        handleFilter(valueLimit)
     }
     const handleFilter = async (limit) => {
         const params = {
@@ -26,26 +28,54 @@ function DepartmentList(props) {
         const res = await getSearchDept(params)
         setDepartment(res)
     }
+    const actionButton = (params) => {
 
-    const headerColumns = [
+    }
+    const columns = [
         {
-            id: 1,
+            field: 'id',
+            headerName: 'ID',
+            hide: true
+        },
+        {
             field: 'kode_department',
-            label: 'Kode Department'
+            headerName: 'Kode Department',
         },
         {
-            id: 2,
             field: 'nama_department',
-            label: 'Nama Department'
+            headerName: 'Nama Department'
         },
         {
-            id: 3,
             field: 'status',
-            label: 'Status'
+            headerName: 'Status'
         },
+        {
+            field: 'id',
+            headerName: 'Action',
+            cellRendererFramework: (parameter) =>
+                <div>
+                    <button>
+                        <Link to={'/employee-edit/edit/' + parameter.value}>
+                            Edit
+                        </Link>
+                    </button>
+
+                    <button onClick={() => del(parameter.value)}
+                    >
+                        Delete
+                    </button>
+                </div >
+        }
     ]
 
-    
+    const defaultColDef = {
+        sortable: true,
+        filter: true,
+        floatingFilter: true,
+        flex: 1,
+    }
+
+
     return (
         <div>
             <BreadCrumb link={
@@ -55,70 +85,37 @@ function DepartmentList(props) {
                 ]
             } />
 
-            <div className="table-container">
-                <div className="table-card">
-                    <div>
-                       
-                        <button>
-                            <Link to={'/department-create/create'}>Create</Link>
-                        </button>
+            <div>
+                <button>
+                    <Link to={'/department-create/create'}>Create</Link>
+                </button>
 
-                        <select onChange={(ev) => handleFilter(ev.target.value)}>
-                            <option value={5}>Entries 5</option>
-                            <option value={10}>Entries 10</option>
-                            <option value={15}>Entries 15</option>
-                        </select>
-                    </div>
+                <select onChange={(ev) => handleFilter(ev.target.value)}>
+                    <option value={5}>Entries 5</option>
+                    <option value={10}>Entries 10</option>
+                    <option value={15}>Entries 15</option>
+                </select>
+            </div>
 
-                    <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Department'} style={{ textTransform: 'capitalize' }} />
+            <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Department'} style={{ textTransform: 'capitalize' }} />
 
-                    
-                    <button onClick={() => handleFilter(valueLimit)}>Cari</button>
 
-                    <GridTable columns={headerColumns} rows={departmentList}/>
+            <button onClick={() => handleFilter(valueLimit)}>Cari</button>
+            <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
 
-                    {/* <table className="table-contain">
-                        <thead>
-                            <tr>
-                                <th>Kode Department</th>
-                                <th>Nama Department</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+            <select onChange={(ev) => setEntries(ev.target.value)}>
+                    <option value={10}>Entries 10</option>
+                    <option value={20}>Entries 20</option>
+                    <option value={35}>Entries 30</option>
+                </select>
 
-                        <tbody>
-                            {departmentList?.map((item, index) => { //looping data di redux
-
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            <span>{item.kode_department}</span>
-                                        </td>
-                                        <td>
-                                            <span>{item.nama_department}</span>
-                                        </td>
-                                        <td>
-                                            <span>{(item.status === 1 ? 'Aktif' : 'Tidak Aktif')}</span>
-                                        </td>
-                                        <td>
-                                            <button>
-                                                <Link to={'/department-edit/edit/' + item.id}>
-                                                    Edit
-                                                </Link>
-                                            </button>
-
-                                            <button onClick={() => del(item.id)} style={{ cursor: 'pointer' }}>
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-
-                    </table> */}
-                </div>
+                <AgGridReact
+                    columnDefs={columns}
+                    rowData={departmentList}
+                    pagination={true}
+                    paginationPageSize={entries}
+                    defaultColDef={defaultColDef}
+                />
             </div>
         </div>
 
