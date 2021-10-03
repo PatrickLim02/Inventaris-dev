@@ -10,9 +10,11 @@ import ReduxProvider from './reduxProvider'
 import UploadFoto from './uploadFoto';
 import UploadMusic from './uploadMusic'
 import FirebaseDatabase from './firebaseDatabase'
+import Test from './test'
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider />
+    {/* <ReduxProvider /> */}
+    <Test />
   </React.StrictMode>,
   document.getElementById('root')
 );

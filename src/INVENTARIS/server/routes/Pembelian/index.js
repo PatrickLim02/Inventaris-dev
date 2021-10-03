@@ -5,10 +5,21 @@ var server = new mysql()
 var jwt = require('jsonwebtoken')
 const verifyToken = require('../TokenValidation')
 
+const generateUnique = (value) => {
+    let result = '';
+    const characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < value; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    console.log('KEY: ', result)
+    return result;
+}
 
 
 router
-    .route('/') //endpoint /barang
+    .route('/') //endpoint /pembelian
     .get(verifyToken, (req, res) => {
         jwt.verify(req.token, 'secretkey', (err, autData) => {
             if (typeof autData === 'undefined') { // Jika autdata  ==== undefined . typeof mengubah fungsi sehingga jadi string
@@ -28,22 +39,22 @@ router
                     console.log('Token is not recognized') // Client mengirim token yang expired ke backend
                 }
             }
-            else {                
+            else {
                 var paramQuery = Object.entries(req.query)
-                var paramObject = paramQuery[0] || ''               
+                var paramObject = paramQuery[0] || ''
                 var query = paramObject ?
-                `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
+                    `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
                 ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`
-                : 
-                'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'               
-                server.query(query, (err, rows) => {                    
+                    :
+                    'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'
+                server.query(query, (err, rows) => {
                     if (err) {
 
                         res.status(400).json({
                             status: 400,
                             message: err
                         })
-                    }                 
+                    }
                     res.status(200).json({
                         status: 200,
                         data: rows,
@@ -52,6 +63,7 @@ router
             }
         })
     })
+
 router
     .route('/detail/:id')
     .get((req, res) => {
@@ -94,73 +106,136 @@ router
 router
     .route('/create')
     .post((req, res) => {
-        let grandTotal = req.body.reduce(function(accumulation, item){
+        let grandTotal = req.body.reduce(function (accumulation, item) {
             return accumulation + item.subtotal
-        },0)
-      
-        var data={
+        }, 0)
+        var data = {
             id_vendor: req.body[0].id_vendor,
             id_employee: req.body[0].id_employee,
             tgl_pembelian: req.body[0].tgl_pembelian,
-            total_pembelian : grandTotal,
+            total_pembelian: grandTotal,
+            unique_key: generateUnique(20)
         }
-        server.query("insert into pembelian_header SET ?", data,(err, results)=>{
-            if(results){
-                   server.query(`select * from pembelian_header where id_vendor = '${data.id_vendor}' and id_employee = '${data.id_employee}' and tgl_pembelian = '${data.tgl_pembelian}' `, (err, row)=>{
-                       if (err){
-                        res.status(400).json({
-                            status:400,
-                            message:err
-                        })
-                       }
-                       else{
-                           console.log('ID Pembelian: ', row)
-                           for(var i = 0; i < req.body.length;i++){
-                               const dataDetails={
-                                   id_pembelian: row[0].id,
-                                   id_barang: req.body[i].id_barang,
-                                   harga: req.body[i].harga,
-                                   qty: req.body[i].qty,
-                                   keterangan: req.body[i].keterangan
-                               }
-                              server.query('insert into pembelian_detail SET ?', dataDetails, (err, results)=>{
-                                try{
-                                    if(err){
-                                        res.status(400).json({
-                                            status:400,
-                                            message:err
-                                        })
-                                    }
-                                    else{
-                                        res.status(200).json({
-                                            status:200,
-                                            data:results,
-                                            
-                                        })
-                                    }
-                                }
-                                catch(err){
-                                    console.log(err)
-                                }
-                              })
-                           }
-                       }
-                   })         
-            }
-            else{
+        console.log('DATA: ', data)
+        server.query("insert into pembelian_header SET ?", data, (err, results) => {
+            if (err) {
                 res.status(400).json({
                     status: 400,
                     message: err
                 })
             }
+            else {
+                for (var i = 0; i < req.body.length; i++) {
+                    const dataDetails = {
+                        unique_key: data.unique_key,
+                        id_barang: req.body[i].id_barang,
+                        harga: req.body[i].harga,
+                        qty: req.body[i].qty,
+                        keterangan: req.body[i].keterangan
+                    }
+                    console.log('Data details: ', dataDetails)
+                    server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
+                        try {
+                            if (err) {
+                                res.status(400).json({
+                                    status: 400,
+                                    message: err
+                                })
+                            }
+                            else {
+                                res.status(200).json({
+                                    status: 200,
+                                    data: results,
+
+                                })
+                            }
+                        }
+                        catch (err) {
+                            console.log(err)
+                        }
+                    })
+                }
+            }
         })
     })
+
+
+// router // Cara select id dari header
+//     .route('/create')
+//     .post((req, res) => {
+//         let grandTotal = req.body.reduce(function (accumulation, item) {
+//             return accumulation + item.subtotal
+//         }, 0)
+
+//         var data = {
+//             id_vendor: req.body[0].id_vendor,
+//             id_employee: req.body[0].id_employee,
+//             tgl_pembelian: req.body[0].tgl_pembelian,
+//             total_pembelian: grandTotal,
+//             unique_key: generateUnique(99)
+
+//         }
+//         console.log('DATA: ', data)
+//         server.query("insert into pembelian_header SET ?", data, (err, results) => {
+//             if (results) {
+//                 console.log(results)
+//             }
+//             if (results) {
+//                 server.query(`select * from pembelian_header where id_vendor = '${data.id_vendor}' and id_employee = '${data.id_employee}' and tgl_pembelian = '${data.tgl_pembelian}' `, (err, row) => {
+//                     if (err) {
+//                         res.status(400).json({
+//                             status: 400,
+//                             message: err
+//                         })
+//                     }
+//                     else {
+//                         console.log('ID Pembelian: ', row)
+// for (var i = 0; i < req.body.length; i++) {
+//     const dataDetails = {
+//         id_pembelian: row[0].id,
+//         id_barang: req.body[i].id_barang,
+//         harga: req.body[i].harga,
+//         qty: req.body[i].qty,
+//         keterangan: req.body[i].keterangan
+//     }
+// server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
+//     try {
+//         if (err) {
+//             res.status(400).json({
+//                 status: 400,
+//                 message: err
+//             })
+//         }
+//         else {
+//             res.status(200).json({
+//                 status: 200,
+//                 data: results,
+
+//             })
+//         }
+//     }
+//     catch (err) {
+//         console.log(err)
+//     }
+// })
+//                         }
+//                     }
+//                 })
+//             }
+//             else {
+//                 res.status(400).json({
+//                     status: 400,
+//                     message: err
+//                 })
+//             }
+//         })
+//     })
 
 router
     .route('/edit')
     .post((req, res) => {
         var data = {
-            id : req.body.id,
+            id: req.body.id,
             id_vendor: req.body.id_vendor,
             id_employee: req.body.id_employee,
             tgl_pembelian: req.body.tgl_pembelian,
@@ -253,7 +328,7 @@ router
                             status: 200,
                             totalRows: datas.length,
                             data: rows.length === 0 ? 'no data' : rows,
-                            
+
                         })
                     })
                 })
