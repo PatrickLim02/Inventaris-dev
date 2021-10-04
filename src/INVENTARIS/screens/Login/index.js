@@ -59,7 +59,7 @@ function LoginScreen(props) {
 
 
     return (
-        <div>
+        <div className="body-login-form">
             <div className="container">
                 <img src={LoginIcon} className="user" />
                 <div className="welcome">

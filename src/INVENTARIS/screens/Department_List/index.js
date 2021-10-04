@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'
@@ -35,23 +34,27 @@ function DepartmentList(props) {
         {
             field: 'id',
             headerName: 'ID',
-            hide: true
+            hide: true,
         },
         {
             field: 'kode_department',
             headerName: 'Kode Department',
+            minWidth: 150
         },
         {
             field: 'nama_department',
-            headerName: 'Nama Department'
+            headerName: 'Nama Department',
+            minWidth:150
         },
         {
             field: 'status',
-            headerName: 'Status'
+            headerName: 'Status',
+            minWidth:100
         },
         {
             field: 'id',
             headerName: 'Action',
+            minWidth:100,
             cellRendererFramework: (parameter) =>
                 <div>
                     <button>
@@ -70,11 +73,14 @@ function DepartmentList(props) {
 
     const defaultColDef = {
         sortable: true,
-        filter: true,
-        floatingFilter: true,
+        // filter: true,
         flex: 1,
+        resizable: true
     }
 
+    const onFirstDataRendered = (params) => {
+        params.api.sizeColumnsToFit();
+      };
 
     return (
         <div>
@@ -101,23 +107,26 @@ function DepartmentList(props) {
 
 
             <button onClick={() => handleFilter(valueLimit)}>Cari</button>
-            <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
 
             <select onChange={(ev) => setEntries(ev.target.value)}>
-                    <option value={10}>Entries 10</option>
-                    <option value={20}>Entries 20</option>
-                    <option value={35}>Entries 30</option>
-                </select>
-
-                <AgGridReact
-                    columnDefs={columns}
-                    rowData={departmentList}
-                    pagination={true}
-                    paginationPageSize={entries}
-                    defaultColDef={defaultColDef}
-                />
-            </div>
-        </div>
+                <option value={10}>Entries 10</option>
+                <option value={20}>Entries 20</option>
+                <option value={35}>Entries 30</option>
+            </select>
+           
+                <div id="myGrid"
+                style={{width: "100%", height: "500px"}}
+                className="ag-theme-alpine" >
+                    <AgGridReact
+                    onFirstDataRendered={onFirstDataRendered}
+                        columnDefs={columns}
+                        rowData={departmentList}
+                        pagination={true}
+                        paginationPageSize={entries}
+                        defaultColDef={defaultColDef}
+                    />
+                </div>
+                  </div>
 
     )
 }

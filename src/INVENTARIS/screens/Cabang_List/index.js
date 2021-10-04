@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'
@@ -14,7 +13,7 @@ import { paginationConverter } from '../../helpers/general'
 import ButtonAdd from '../../components/ButtonAdd'
 function CabangList(props) {
     const history = useHistory()
-    const { cabangList, fetchCabangFromBackEndToRedux, setCabang } = props;
+    const {cabangList, fetchCabangFromBackEndToRedux, setCabang } = props;
     const [searchValue, setSearchValue] = useState('')
     const [valueLimit, setValueLimit] = useState(10)
     const [totalPage, setTotalPage] = useState()

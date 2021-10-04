@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import Dropdown from '../../components/Dropdown'
 import { Link } from 'react-router-dom'

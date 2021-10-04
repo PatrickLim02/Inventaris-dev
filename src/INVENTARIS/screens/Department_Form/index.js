@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import { setDepartment, fetchDepartmentFromBackEndToRedux } from '../../redux'
 import { useHistory } from 'react-router-dom'
@@ -9,21 +8,6 @@ import FormDepartment_Create from '../../components/Form/FormDepartment_Create'
 import FormDepartment_Edit from '../../components/Form/FormDepartment_Edit'
 import {createDepartment, editDepartment} from '../../helpers/requestDept'
 function DepartmentForm(props) {
-    // const handleSubmitRedux = async() =>{
-    //     const data = {
-    //         id : id,
-    //         kode : cabang,
-    //         nama : nama,
-    //         alamat : alamat,
-    //         telepon : telepon,
-    //         status : checkstatus
-    //     }
-    //     let pushData = list.concat(data); // Copy data saat ini dari redux + data yang dimasukkan
-    //     props.setCabang({data: pushData}) //nambah data di Redux
-    //     alert('berhasil menambahkan data')
-    //     console.log('push data', pushData)
-    //     direct.goBack()
-    // }
     const { types, id } = props.match.params; //Harus sama dengan yang di router
     const direct = useHistory();
     const { departmentList, fetchDepartmentFromBackEndToRedux } = props

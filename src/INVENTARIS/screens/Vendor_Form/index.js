@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 import {fetchVendorFromBackEndToRedux} from '../../redux'
 import { useHistory } from 'react-router-dom'

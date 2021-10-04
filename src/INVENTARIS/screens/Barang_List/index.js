@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
-import './styles.scss'
 import axios from 'axios'
 import BreadCrumb from '../../components/BreadCrumb'
 import Dropdown from '../../components/Dropdown'

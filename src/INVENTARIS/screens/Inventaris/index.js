@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import './styles.scss'
 import BreadCrumb from '../../components/BreadCrumb'
 function Inventaris () {
     return (
