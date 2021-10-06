@@ -4,7 +4,7 @@ import {styles} from './styles'
 import './buttonAdd.scss'
 import { Link } from 'react-router-dom'
 
-function ButtonAdd(props) {
+function ButtonCreate(props) {
     return (
         <div style={styles.container}>
             <Link  {...props}>
@@ -17,4 +17,4 @@ function ButtonAdd(props) {
     )
 }
 
-export default ButtonAdd
+export default ButtonCreate

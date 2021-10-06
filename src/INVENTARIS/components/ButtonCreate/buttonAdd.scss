@@ -3,12 +3,13 @@
     background: #a1ffb5;
     border: 1px solid rgb(29, 29, 29);
     font-family: "Courier New", Courier, monospace;
-    width: 120px;
-    height: 30px;
+    width: 80px;
+    height: 20px;
     cursor: pointer;
     transition: color 0.4s linear;
     position: relative;
     font-weight: 500;
+    font-size: 12px;
   }
   
     .btn:hover {

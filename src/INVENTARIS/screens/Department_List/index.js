@@ -8,10 +8,10 @@ import { setDepartment, fetchDepartmentFromBackEndToRedux } from '../../redux'
 import { AgGridReact, AgGridColumn } from 'ag-grid-react'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
+import ButtonCreate from '../../components/ButtonCreate'
 function DepartmentList(props) {
     const { departmentList, fetchDepartmentFromBackEndToRedux, setDepartment } = props;
-    const [valueLimit, setValueLimit] = useState(5)
+
     const [searchValue, setSearchValue] = useState('')
     const [entries, setEntries] = useState(10)
     const del = (id) => {
@@ -23,7 +23,7 @@ function DepartmentList(props) {
             nama_department: searchValue,
             limit: limit
         }
-        setValueLimit(limit)
+        setEntries(limit)
         const res = await getSearchDept(params)
         setDepartment(res)
     }
@@ -39,26 +39,30 @@ function DepartmentList(props) {
         {
             field: 'kode_department',
             headerName: 'Kode Department',
-            minWidth: 150
+            minWidth: 150,
+            sortable: true,
+
         },
         {
             field: 'nama_department',
             headerName: 'Nama Department',
-            minWidth:150
+            minWidth: 150,
+            sortable: true
         },
         {
             field: 'status',
             headerName: 'Status',
-            minWidth:100
+            minWidth: 100,
+            sortable: true
         },
         {
             field: 'id',
             headerName: 'Action',
-            minWidth:100,
+            minWidth: 100,
             cellRendererFramework: (parameter) =>
                 <div>
                     <button>
-                        <Link to={'/employee-edit/edit/' + parameter.value}>
+                        <Link to={'/department-edit/edit/' + parameter.value}>
                             Edit
                         </Link>
                     </button>
@@ -72,7 +76,7 @@ function DepartmentList(props) {
     ]
 
     const defaultColDef = {
-        sortable: true,
+
         // filter: true,
         flex: 1,
         resizable: true
@@ -80,53 +84,53 @@ function DepartmentList(props) {
 
     const onFirstDataRendered = (params) => {
         params.api.sizeColumnsToFit();
-      };
+    };
 
     return (
-        <div>
-            <BreadCrumb link={
-                [
-                    { name: 'Master' },
-                    { name: 'Department' }
-                ]
-            } />
-
+        <div
+            style={{ width: "100%", height: "100%", position: 'relative' }}>
             <div>
-                <button>
-                    <Link to={'/department-create/create'}>Create</Link>
-                </button>
-
-                <select onChange={(ev) => handleFilter(ev.target.value)}>
-                    <option value={5}>Entries 5</option>
-                    <option value={10}>Entries 10</option>
-                    <option value={15}>Entries 15</option>
-                </select>
+                <BreadCrumb link={
+                    [
+                        { name: 'Master' },
+                        { name: 'Department' }
+                    ]
+                } />
+                <ButtonCreate to={'/cabang-create/create'} />
             </div>
 
-            <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Department'} style={{ textTransform: 'capitalize' }} />
+            <div style={{width: '98%', height: '40px', marginLeft: '1%', marginRight: '1%', position: 'relative' }}>
+                <select onChange={(ev) => handleFilter(ev.target.value)} style={{ position: 'absolute', top: '15px', left: '0px' }}>
+                    <option value={10}>Entries 10</option>
+                    <option value={20}>Entries 20</option>
+                    <option value={35}>Entries 35</option>
+                </select>
+
+                <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Department'}
+                    style={{ textTransform: 'capitalize', position: 'absolute', top: '15px', right: '35px' }} />
+
+                <button onClick={() => handleFilter(entries)} style={{ position: 'absolute', top: '15px', right: '1px'}}>Cari</button>
+            </div>
 
 
-            <button onClick={() => handleFilter(valueLimit)}>Cari</button>
 
-            <select onChange={(ev) => setEntries(ev.target.value)}>
-                <option value={10}>Entries 10</option>
-                <option value={20}>Entries 20</option>
-                <option value={35}>Entries 30</option>
-            </select>
-           
-                <div id="myGrid"
-                style={{width: "100%", height: "500px"}}
+            <div id="myGrid"
+                style={{ width: "98%", height: "75%", marginLeft: '1%', marginRight: '1%', marginTop: '5px', borderRadius: '20px' }}
                 className="ag-theme-alpine" >
-                    <AgGridReact
+                <AgGridReact
+                    style={{
+                        fontSize: '5px'
+                    }}
                     onFirstDataRendered={onFirstDataRendered}
-                        columnDefs={columns}
-                        rowData={departmentList}
-                        pagination={true}
-                        paginationPageSize={entries}
-                        defaultColDef={defaultColDef}
-                    />
-                </div>
-                  </div>
+                    columnDefs={columns}
+                    rowData={departmentList}
+                    pagination={true}
+                    paginationPageSize={entries}
+                    defaultColDef={defaultColDef}
+                    rowHeight={40}
+                />
+            </div>
+        </div>
 
     )
 }

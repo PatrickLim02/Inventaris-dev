@@ -11,7 +11,7 @@ import { Container, ButtonDirects } from '../../components/components'
 import { getPembelianList, getPembelianLimit, deletePembelian, getSearchPembelian, getPembelianPagination } from '../../helpers/request_pembelian'
 import { paginationConverter } from '../../helpers/general'
 import moment from 'moment'
-import ButtonAdd from '../../components/ButtonAdd'
+import ButtonCreate from '../../components/ButtonCreate'
 function Pembelian_List(props) {
     const [pembelianList, setPembelianList] = useState([])
     const [searchValue, setSearchValue] = useState('')
@@ -123,7 +123,7 @@ function Pembelian_List(props) {
                     { name: 'Pembelian' }
                 ]
             } />
-            <ButtonAdd to={'/pembelian-create/create'} />
+            <ButtonCreate to={'/pembelian-create/create'} />
             <div className="table-container">
                 <div className="table-card">
                     <div>

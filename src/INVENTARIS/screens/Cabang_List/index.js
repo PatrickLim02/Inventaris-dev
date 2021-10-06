@@ -10,7 +10,7 @@ import { getCabang } from '../../helpers/requestFirebase'
 import { Container, ButtonDirects } from '../../components/components'
 import { getCabangList, getCabangLimit, deleteCabang, getSearchCabang, getCabangPagination } from '../../helpers/requestCabang'
 import { paginationConverter } from '../../helpers/general'
-import ButtonAdd from '../../components/ButtonAdd'
+import ButtonCreate from '../../components/ButtonCreate'
 function CabangList(props) {
     const history = useHistory()
     const {cabangList, fetchCabangFromBackEndToRedux, setCabang } = props;
@@ -96,7 +96,7 @@ function CabangList(props) {
                     { name: 'Cabang' }
                 ]
             } />
-            <ButtonAdd to={'/cabang-create/create'}/>
+            <ButtonCreate to={'/cabang-create/create'}/>
             <div className="table-container">
                 <div className="table-card">
                     <div>   <select onChange={(ev) => handleFilter(ev.target.value)}>
