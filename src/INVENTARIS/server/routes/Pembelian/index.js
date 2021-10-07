@@ -43,10 +43,10 @@ router
                 var paramQuery = Object.entries(req.query)
                 var paramObject = paramQuery[0] || ''
                 var query = paramObject ?
-                    `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
+                    `SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.status from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on 
                 ph.id_employee = u.id where ${paramObject[0]} like '%${paramObject[1]}%'`
                     :
-                    'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.total_pembelian from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'
+                    'SELECT ph.id, ph.id_vendor, v.nama_vendor, ph.id_employee, u.nama_user, ph.tgl_pembelian, ph.status from pembelian_header ph inner join vendor v on ph.id_vendor = v.id inner join user u on ph.id_employee = u.id limit 10'
                 server.query(query, (err, rows) => {
                     if (err) {
 
@@ -68,7 +68,7 @@ router
     .route('/detail/:id')
     .get((req, res) => {
         var id = req.params.id
-        var query = "Select * from pembelian_header where id = " + id
+        var query = "Select * from pembelian_header as ph inner join vendor as v on ph.id_vendor = v.id inner join user as u on ph.id_employee = u.id where ph.id = " + id
         server.query(query, (err, rows) => {
             if (err) {
                 res.status(400).json({
@@ -103,133 +103,132 @@ router
     })
 
 
-router
-    .route('/create')
-    .post((req, res) => {
-        let grandTotal = req.body.reduce(function (accumulation, item) {
-            return accumulation + item.subtotal
-        }, 0)
-        var data = {
-            id_vendor: req.body[0].id_vendor,
-            id_employee: req.body[0].id_employee,
-            tgl_pembelian: req.body[0].tgl_pembelian,
-            total_pembelian: grandTotal,
-            unique_key: generateUnique(20)
-        }
-        console.log('DATA: ', data)
-        server.query("insert into pembelian_header SET ?", data, (err, results) => {
-            if (err) {
-                res.status(400).json({
-                    status: 400,
-                    message: err
-                })
-            }
-            else {
-                for (var i = 0; i < req.body.length; i++) {
-                    const dataDetails = {
-                        unique_key: data.unique_key,
-                        id_barang: req.body[i].id_barang,
-                        harga: req.body[i].harga,
-                        qty: req.body[i].qty,
-                        keterangan: req.body[i].keterangan
-                    }
-                    console.log('Data details: ', dataDetails)
-                    server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
-                        try {
-                            if (err) {
-                                res.status(400).json({
-                                    status: 400,
-                                    message: err
-                                })
-                            }
-                            else {
-                                res.status(200).json({
-                                    status: 200,
-                                    data: results,
-
-                                })
-                            }
-                        }
-                        catch (err) {
-                            console.log(err)
-                        }
-                    })
-                }
-            }
-        })
-    })
-
-
-// router // Cara select id dari header
+// router // Cara pake unique key
 //     .route('/create')
 //     .post((req, res) => {
 //         let grandTotal = req.body.reduce(function (accumulation, item) {
 //             return accumulation + item.subtotal
 //         }, 0)
-
 //         var data = {
 //             id_vendor: req.body[0].id_vendor,
 //             id_employee: req.body[0].id_employee,
 //             tgl_pembelian: req.body[0].tgl_pembelian,
 //             total_pembelian: grandTotal,
-//             unique_key: generateUnique(99)
-
+//             unique_key: generateUnique(20)
 //         }
 //         console.log('DATA: ', data)
 //         server.query("insert into pembelian_header SET ?", data, (err, results) => {
-//             if (results) {
-//                 console.log(results)
-//             }
-//             if (results) {
-//                 server.query(`select * from pembelian_header where id_vendor = '${data.id_vendor}' and id_employee = '${data.id_employee}' and tgl_pembelian = '${data.tgl_pembelian}' `, (err, row) => {
-//                     if (err) {
-//                         res.status(400).json({
-//                             status: 400,
-//                             message: err
-//                         })
-//                     }
-//                     else {
-//                         console.log('ID Pembelian: ', row)
-// for (var i = 0; i < req.body.length; i++) {
-//     const dataDetails = {
-//         id_pembelian: row[0].id,
-//         id_barang: req.body[i].id_barang,
-//         harga: req.body[i].harga,
-//         qty: req.body[i].qty,
-//         keterangan: req.body[i].keterangan
-//     }
-// server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
-//     try {
-//         if (err) {
-//             res.status(400).json({
-//                 status: 400,
-//                 message: err
-//             })
-//         }
-//         else {
-//             res.status(200).json({
-//                 status: 200,
-//                 data: results,
-
-//             })
-//         }
-//     }
-//     catch (err) {
-//         console.log(err)
-//     }
-// })
-//                         }
-//                     }
-//                 })
-//             }
-//             else {
+//             if (err) {
 //                 res.status(400).json({
 //                     status: 400,
 //                     message: err
 //                 })
 //             }
+//             else {
+//                 for (var i = 0; i < req.body.length; i++) {
+//                     const dataDetails = {
+//                         unique_key: data.unique_key,
+//                         id_barang: req.body[i].id_barang,
+//                         harga: req.body[i].harga,
+//                         qty: req.body[i].qty,
+//                         keterangan: req.body[i].keterangan
+//                     }
+//                     console.log('Data details: ', dataDetails)
+//                     server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
+//                         try {
+//                             if (err) {
+//                                 res.status(400).json({
+//                                     status: 400,
+//                                     message: err
+//                                 })
+//                             }
+//                             else {
+//                                 res.status(200).json({
+//                                     status: 200,
+//                                     data: results,
+
+//                                 })
+//                             }
+//                         }
+//                         catch (err) {
+//                             console.log(err)
+//                         }
+//                     })
+//                 }
+//             }
 //         })
 //     })
+
+
+router // Cara select id dari header
+    .route('/create')
+    .post((req, res) => {
+        let grandTotal = req.body.reduce(function (accumulation, item) {
+            return accumulation + item.subtotal
+        }, 0)
+
+        var data = {
+            id_vendor: req.body[0].id_vendor,
+            id_employee: req.body[0].id_employee,
+            tgl_pembelian: req.body[0].tgl_pembelian,
+            status: 'diproses'
+
+        }
+        console.log('DATA: ', data)
+        server.query("insert into pembelian_header SET ?", data, (err, results) => {
+            if (results) {
+                console.log(results)
+            }
+            if (results) {
+                server.query(`select * from pembelian_header where id_vendor = '${data.id_vendor}' and id_employee = '${data.id_employee}' and tgl_pembelian = '${data.tgl_pembelian}' `, (err, row) => {
+                    if (err) {
+                        res.status(400).json({
+                            status: 400,
+                            message: err
+                        })
+                    }
+                    else {
+                        console.log('ID Pembelian: ', row)
+                        for (var i = 0; i < req.body.length; i++) {
+                            const dataDetails = {
+                                id_pembelian: row[0].id,
+                                id_barang: req.body[i].id_barang,
+                                harga: req.body[i].harga,
+                                qty: req.body[i].qty,
+                                keterangan: req.body[i].keterangan
+                            }
+                            server.query('insert into pembelian_detail SET ?', dataDetails, (err, results) => {
+                                try {
+                                    if (err) {
+                                        res.status(400).json({
+                                            status: 400,
+                                            message: err
+                                        })
+                                    }
+                                    else {
+                                        res.status(200).json({
+                                            status: 200,
+                                            data: results,
+
+                                        })
+                                    }
+                                }
+                                catch (err) {
+                                    console.log(err)
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+            else {
+                res.status(400).json({
+                    status: 400,
+                    message: err
+                })
+            }
+        })
+    })
 
 router
     .route('/edit')

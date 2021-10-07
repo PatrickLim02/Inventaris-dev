@@ -123,7 +123,7 @@ function Pembelian_List(props) {
                     { name: 'Pembelian' }
                 ]
             } />
-            <ButtonCreate to={'/pembelian-create/create'} />
+            <ButtonCreate to={'/pembelian-create/create'} style={{position:'absolute', top:'120px', right: '50px'}} />
             <div className="table-container">
                 <div className="table-card">
                     <div>
@@ -151,7 +151,7 @@ function Pembelian_List(props) {
                                 <th>Nama Vendor</th>
                                 <th>Nama Employee</th>
                                 <th>Tanggal Pembelian</th>
-                                <th>Total Pembelian</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -173,11 +173,11 @@ function Pembelian_List(props) {
                                             <span>{moment(item.tgl_pembelian).format('DD-MM-YYYY')}</span>
                                         </td>
                                         <td>
-                                            <span>{item.total_pembelian}</span>
+                                            <span>{item.status}</span>
                                         </td>
 
                                         <td>
-                                            <button>
+                                            {/* <button>
                                                 <Link to={'/barang-edit/edit/' + item.id}>
                                                     Edit
                                                 </Link>
@@ -185,6 +185,11 @@ function Pembelian_List(props) {
 
                                             <button onClick={() => delCabang(item.id)} style={{ cursor: 'pointer' }}>
                                                 Delete
+                                            </button> */}
+                                             <button>
+                                                <Link to={'/pembelian-detail/' + item.id}>
+                                                    Detail
+                                                </Link>
                                             </button>
                                         </td>
                                     </tr>

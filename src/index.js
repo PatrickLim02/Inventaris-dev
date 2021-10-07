@@ -4,18 +4,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './Styles/styleTableList.scss'
 import App from './App';
-
 import reportWebVitals from './reportWebVitals';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ReduxProvider from './reduxProvider'
 import UploadFoto from './uploadFoto';
 import UploadMusic from './uploadMusic'
 import FirebaseDatabase from './firebaseDatabase'
 import Test from './test'
+import SearchBar from './INVENTARIS/components/SearchBar'
+
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider />
-    {/* <Test /> */}
+    <SearchBar />
+
   </React.StrictMode>,
   document.getElementById('root')
 );

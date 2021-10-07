@@ -51,6 +51,7 @@ import Vendor_Form from '../../screens/Vendor_Form'
 // -- TRANSAKSI -- 
 import Pembelian_List from '../../screens/Pembelian_List'
 import Pembelian_Form from '../../screens/Pembelian_Form'
+import Pembelian_Detail from '../../screens/PembelianDetail'
 
 const Aside = (props) => {
     const { visiblesidebar } = props //kalau tidak mau deklarasi, pakai props.visiblesidebar
@@ -269,6 +270,7 @@ const Aside = (props) => {
 
                 <Route path={'/pembelian-list'} component={Pembelian_List} />
                 <Route path={'/pembelian-create/:types'} component={Pembelian_Form} />
+                <Route path={'/pembelian-detail/:id'} component={Pembelian_Detail} />
 
             </div>
 
