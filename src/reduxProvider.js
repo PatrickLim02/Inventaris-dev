@@ -9,9 +9,6 @@ import VendorModal from './INVENTARIS/components/SelectVendorModal'
 import EmployeeModal from './INVENTARIS/components/SelectEmployeeModal'
 import BarangModal from './INVENTARIS/components/SelectBarangModal'
 
-<link rel="stylesheet"
-    href="https://fonts.google.com/icons?selected=Material%20Icons%3Asearch%3A">
-</link>
 function ReduxProvider() {
 
     return (

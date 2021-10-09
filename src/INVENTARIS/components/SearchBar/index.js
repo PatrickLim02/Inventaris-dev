@@ -1,18 +1,13 @@
 import react from 'react'
 import './style.css'
 import Search from '../../assets/search.svg'
-function SearchBarBox() {
+function SearchBarBox(props) {
+    const {placeholder, onClickEvent} = props
     return (
         <div className="search-box-container">
             <div className="element-container">
-                <tr>
-                    <td>
-                        <input type="text" placeholder="Search" className="search-text" />
-                    </td>
-                    <td>
-                        <img src={Search} className="search-icon" />
-                    </td>
-                </tr>
+                <input type="text" placeholder={placeholder} className="search-input" />
+                <img src={Search} className="search-icon" onClick={onClickEvent}/>
             </div>
         </div>
 

@@ -15,7 +15,7 @@ import SearchBar from './INVENTARIS/components/SearchBar'
 
 ReactDOM.render(
   <React.StrictMode>
-    <SearchBar />
+    <ReduxProvider />
 
   </React.StrictMode>,
   document.getElementById('root')

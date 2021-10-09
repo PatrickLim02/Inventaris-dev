@@ -9,6 +9,7 @@ import { AgGridReact, AgGridColumn } from 'ag-grid-react'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import ButtonCreate from '../../components/ButtonCreate'
+import SearcBar from '../../components/SearchBar'
 function DepartmentList(props) {
     const { departmentList, fetchDepartmentFromBackEndToRedux, setDepartment } = props;
 
@@ -108,6 +109,11 @@ function DepartmentList(props) {
 
                 <input onChange={(ev) => setSearchValue(ev.target.value)} type="text" placeholder={'Cari Nama Department'}
                     style={{ textTransform: 'capitalize', position: 'absolute', top: '15px', right: '35px' }} />
+
+                <SearcBar placeholder={'Cari1 Nama Department'}
+                onChange={(ev) => setSearchValue(ev.target.value)}
+                
+                onClick={() => handleFilter(entries)} />
 
                 <button onClick={() => handleFilter(entries)} style={{ position: 'absolute', top: '15px', right: '1px'}}>Cari</button>
             </div>
