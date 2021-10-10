@@ -12,7 +12,7 @@ import { getPembelianDetail } from '../../helpers/request_pembelian'
 import { paginationConverter } from '../../helpers/general'
 import moment from 'moment'
 import ButtonCreate from '../../components/ButtonCreate'
-import { Container, Row, Col, Card, CardText, CardBody, CardTitle } from 'reactstrap';
+// import { Container, Row, Col, Card, CardText, CardBody, CardTitle } from 'reactstrap';
 
 function Pembelian_List(props) {
     const { id } = props.match.params
@@ -43,7 +43,7 @@ function Pembelian_List(props) {
                 ]
             } />
 
-            <Row className="m-3">
+            {/* <Row className="m-3">
                 <Col className="mb-3" lg="3" md="6" sm="12">
                     <Card>
                         <CardBody>
@@ -115,7 +115,7 @@ function Pembelian_List(props) {
                         </CardBody>
                     </Card>
                 </Col>
-            </Row>
+            </Row> */}
 
 
         </Containers>

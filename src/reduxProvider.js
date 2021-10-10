@@ -8,6 +8,7 @@ import TokenModal from './INVENTARIS/components/ExpiredTokenModal'
 import VendorModal from './INVENTARIS/components/SelectVendorModal'
 import EmployeeModal from './INVENTARIS/components/SelectEmployeeModal'
 import BarangModal from './INVENTARIS/components/SelectBarangModal'
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ReduxProvider() {
 

@@ -1,11 +1,9 @@
 .search-box-container{
-    position: relative;
-    width: 300px;
-    height: 42px;
-    border: 1px solid #2980b9;
-
+    position: absolute;
+    width: 200px;
+    height: 30px;
+    border: 1px solid #2980b9; 
     border-radius: 50px;
-   
 }
 
 .element-container{
@@ -23,7 +21,7 @@
     font-family: "sans-serif";
     color: #424242;
     font-weight: 500;
-
+    font-size: 14px;
 }
 
 .search-text:focus{
@@ -33,9 +31,9 @@
 
 .search-icon{
     position: absolute;
-    right: 9px;
-    top: 9px;
-    font-size: 26px;
+    right: 6px;
+    top: 5px;
     color: #2980b9;
     cursor: pointer;
+    width: 20px;
 }
