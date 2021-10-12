@@ -49,8 +49,7 @@ router
     .route('/search')
     .get((req, res) =>{
         var nama_department = req.query.nama_department
-        var limit = req.query.limit || ''
-        var query = `select * from department where nama_department like '%${nama_department}%' limit ${limit} `;
+        var query = `select * from department where nama_department like '%${nama_department}%' `;
        
         server.query(query, (err, rows) =>{
             if (err) {

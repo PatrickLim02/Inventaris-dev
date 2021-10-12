@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import BreadCrumb from '../../components/BreadCrumb'
+import BreadcrumbsTest from '../../components/Breadcrumbs'
 import { setDepartment, fetchDepartmentFromBackEndToRedux } from '../../redux'
 import { useHistory } from 'react-router-dom'
 import firebase from '../../../firebaseAPI'
@@ -60,16 +60,14 @@ function DepartmentForm(props) {
     }
 
     return (
-
-        <div>
-            <BreadCrumb link={
-                [
-                    { name: 'Master' },
-                    { name: 'Department' },
-                    { name: types }
-                ]
-
-            } />
+        <div style={{position:'relative', backgroundColor: 'yellow', width: '100%', height:'100%'}}>
+            <BreadcrumbsTest menuBreadcrumbs={
+                    [
+                        <p>Master</p>,
+                        <p>Department</p>,
+                        <p>Create</p>
+                    ]
+                } />
 
             {renderForm()}
         </div>

@@ -37,9 +37,7 @@ function DepartmentList(props) {
     const handleFilter = async (limit) => {
         const params = {
             nama_department: searchValue,
-            limit: limit
         }
-        setEntries(limit)
         const res = await getSearchDept(params)
         setDepartment(res)
     }
@@ -92,7 +90,6 @@ function DepartmentList(props) {
     ]
 
     const defaultColDef = {
-
         // filter: true,
         flex: 1,
         resizable: true
@@ -113,7 +110,7 @@ function DepartmentList(props) {
     });
 
     return (
-        <div style={{ width: "100%", height: "100%", position: 'relative' }}>
+        <div style={{ width: "100%", height: "100%", position: 'relative'}}>
             <div>
                 <BreadcrumbsTest menuBreadcrumbs={
                     [
@@ -122,20 +119,22 @@ function DepartmentList(props) {
                     ]
                 } />
                 {/* <ButtonCreate to={'/cabang-create/create'} /> */}
-                <Button variant="outlined" startIcon={<AddIcon style={{fontSize: '20px'}} />}
+                <Link to={'/department-create/create'}>
+                    <Button variant="outlined" startIcon={<AddIcon style={{ fontSize: '20px' }} />}
+                        style={{ backgroundColor: '#26a69a', color: 'white', position: 'absolute', top: '10px', right: '25px', width: '90px', height: '30px', fontSize: '13px', marginLeft: '10px' }}>
+                        Create
+                    </Button>
+                </Link>
 
-                style={{ backgroundColor: '#26a69a', color: 'white', position: 'absolute', top: '10px', right: '25px', width: '90px', height: '30px', fontSize: '13px', marginLeft: '10px'}}>
-                    Create
-                </Button>
             </div>
 
-            <div style={{ height: '40px', positon: 'relative'}}>
+            <div style={{ height: '40px', positon: 'relative' }}>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <Select
                         value={entries}
                         onChange={handleChange}
                         displayEmpty
-                        style={{ height: '30px', backgroundColor:'white'  }}
+                        style={{ height: '30px', backgroundColor: 'white' }}
                     >
                         <MenuItem value={10}>Entries 10</MenuItem>
                         <MenuItem value={20}>Entries 20</MenuItem>
@@ -143,29 +142,30 @@ function DepartmentList(props) {
                     </Select>
                 </FormControl>
 
-                <span className="bg-primary"> test </span>  
 
                 <TextField
                     label="Cari Nama Department"
+                    onChange={(ev) => setSearchValue(ev.target.value)}
                     size='small'
                     style={{ height: '30px', position: 'absolute', top: '52px', right: '60px' }}
                     InputProps={{
                         style: {
-                            height: '30px',
+                            height: '32px',
                             borderWidth: '1px',
-                            backgroundColor:'white'
+                            backgroundColor: 'white',
+                            fontSize: 15, //when shrink                
                         }
                     }}
                     InputLabelProps={{
                         style: {
-                            fontSize: 12,
-                            borderWidth: '1px',
-                            borderColor: 'yellow !important'
+                            fontSize: 15, //placeholder
+                            margin: 0
                         }
                     }}
                 />
 
                 <IconButton color="primary"
+                    onClick={() => handleFilter(entries)}
                     style={{ position: 'absolute', top: '45px', right: '15px' }}>
                     <SearchIcon style={{ fontSize: '30px' }} />
                 </IconButton>
