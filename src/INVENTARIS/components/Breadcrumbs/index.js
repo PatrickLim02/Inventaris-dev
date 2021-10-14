@@ -7,7 +7,7 @@ function BreadcrumbsTest(props) {
     const { menuBreadcrumbs } = props
     return (
         <div style={{
-            backgroundColor:'green', paddingLeft: '15px', paddingTop: '10px', paddingBottom: '10px'}}>
+            backgroundColor:'white', paddingLeft: '15px', paddingTop: '10px', paddingBottom: '10px'}}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                 {menuBreadcrumbs}
             </Breadcrumbs>

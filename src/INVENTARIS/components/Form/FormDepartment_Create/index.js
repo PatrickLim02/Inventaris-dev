@@ -4,6 +4,16 @@ import BreadcrumbsTest from '../../Breadcrumbs'
 
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 function FormDepartment_Create(props) {
     const { handleSubmitFirebase } = props
     const [nama, setNama] = useState('')
@@ -19,47 +29,79 @@ function FormDepartment_Create(props) {
         handleSubmitFirebase(rekapData)
     }
     return (
-        <div >         
-            <Grid container spacing={2} style={{marginTop: '10px'}}>
-                <Grid item lg={6} md={12} xs={12}>
-                <TextField
-                    label="Kode Department"
-                    onChange={(ev) => setKodeDepartment(ev.target.value)}
-                    InputProps={{
-                        style: {
-                            height: '55px',
-                            backgroundColor: 'white',
-                            fontSize: 20, //when shrink                  
-                        }
-                    }}   
-                    InputLabelProps={{
-                        style: {
-                            fontSize: 20, //placeholder
-                            
-                        }
-                    }}
-                />
-                </Grid>
-                <Grid item lg={12} md={6}>
-                <TextField
-                    label="Nama Department"
-                    onChange={(ev) => setNama(ev.target.value)}
-                    InputProps={{
-                        style: {
-                            height: '55px',
-                            backgroundColor: 'white',
-                            fontSize: 20, //when shrink                  
-                        }
-                    }}   
-                    InputLabelProps={{
-                        style: {
-                            fontSize: '19px', //placeholder
-                            
-                        }
-                    }}
-                />
-                </Grid>
-                
+        <div >
+            <Grid container>
+                <Card sx={{ width: '100%', margin: '10px' }}>
+                    <CardHeader
+                        titleTypographyProps={{ variant: "h5" }}
+                        title="Form Create Department"
+
+                    />
+
+                    <CardContent>
+                        <Grid item md={12} xs={12}
+                            sx={{ paddingBottom: '15px' }}>
+                            <TextField
+                                label="Kode Department"
+                                onChange={(ev) => setKodeDepartment(ev.target.value)}
+                                InputProps={{
+                                    style: {
+                                        height: '55px',
+                                        backgroundColor: 'white',
+                                        fontSize: 20, //when shrink     
+                                        width: 500
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 20, //placeholder
+
+                                    }
+                                }}
+                            />
+                        </Grid>
+                        <Grid item md={12} xs={12}
+                        sx={{ paddingBottom: '15px' }}>
+                            <TextField
+                                label="Nama Department"
+                                onChange={(ev) => setNama(ev.target.value)}
+                                InputProps={{
+                                    style: {
+                                        height: '55px',
+                                        backgroundColor: 'white',
+                                        fontSize: 20, //when shrink     
+                                        width: 500
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 20, //placeholder
+
+                                    }
+                                }}
+                            />
+                        </Grid>
+
+                        <Grid item md={12} xs={12}
+                        sx={{marginLeft:'3px'}}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Status Keaktifan</FormLabel>
+                                <RadioGroup
+                                    aria-label="status"
+                                    name="controlled-radio-buttons-group"
+                                   
+                                >
+                                    <FormControlLabel value="aktif" control={<Radio />} label="Aktif" />
+                                    <FormControlLabel value="tidak aktif" control={<Radio />} label="Tidak Aktif" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+
+                    </CardContent>
+                </Card>
+
+
+
             </Grid>
 
             {/* <dl>

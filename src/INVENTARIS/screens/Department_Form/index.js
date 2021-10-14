@@ -60,7 +60,7 @@ function DepartmentForm(props) {
     }
 
     return (
-        <div style={{position:'relative', backgroundColor: 'yellow', width: '100%', height:'100%'}}>
+        <div style={{position:'relative', width: '100%', height:'100%'}}>
             <BreadcrumbsTest menuBreadcrumbs={
                     [
                         <p>Master</p>,
