@@ -12,7 +12,7 @@ import ButtonCreate from '../../components/ButtonCreate'
 import { Breadcrumbs } from '@mui/material';
 import SearcBar from '../../components/SearchBar'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import BreadcrumbsTest from '../../components/Breadcrumbs'
+import BreadcrumbsComp from '../../components/Breadcrumbs'
 
 // Import MUI Library
 import MenuItem from '@mui/material/MenuItem';
@@ -22,8 +22,12 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+
+// Icon
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 function DepartmentList(props) {
     const { departmentList, fetchDepartmentFromBackEndToRedux, setDepartment, classes } = props;
@@ -75,16 +79,16 @@ function DepartmentList(props) {
             minWidth: 100,
             cellRendererFramework: (parameter) =>
                 <div>
-                    <button>
-                        <Link to={'/department-edit/edit/' + parameter.value}>
-                            Edit
-                        </Link>
-                    </button>
+                    <Link to={'/department-edit/edit/' + parameter.value}>
+                        <IconButton color="primary">
+                            <EditIcon style={{fontSize: '25px'}}/>
+                        </IconButton>
+                    </Link>
 
-                    <button onClick={() => del(parameter.value)}
-                    >
-                        Delete
-                    </button>
+                    <IconButton color="error"
+                        onClick={() => del(parameter.value)}>
+                        <DeleteForeverIcon style={{ fontSize: '25px' }} />
+                    </IconButton>
                 </div >
         }
     ]
@@ -110,9 +114,9 @@ function DepartmentList(props) {
     });
 
     return (
-        <div style={{ width: "100%", height: "100%", position: 'relative'}}>
+        <div style={{ width: "100%", height: "100%", position: 'relative' }}>
             <div>
-                <BreadcrumbsTest menuBreadcrumbs={
+                <BreadcrumbsComp menuBreadcrumbs={
                     [
                         <p>Master</p>,
                         <p>Department</p>

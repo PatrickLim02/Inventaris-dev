@@ -3,16 +3,16 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 
-function BreadcrumbsTest(props) {
+function BreadcrumbsComp(props) {
     const { menuBreadcrumbs } = props
     return (
         <div style={{
             backgroundColor:'white', paddingLeft: '15px', paddingTop: '10px', paddingBottom: '10px'}}>
-            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" color='black'>
                 {menuBreadcrumbs}
             </Breadcrumbs>
         </div>
     )
 }
 
-export default BreadcrumbsTest
+export default BreadcrumbsComp

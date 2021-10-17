@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
+// Components
 import BreadcrumbsTest from '../../Breadcrumbs'
-
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -13,6 +13,16 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import Button from '@mui/material/Button';
+
+
+// Icons
+import SaveIcon from '@mui/icons-material/Save';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RestoreIcon from '@mui/icons-material/Restore';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
+
 
 function FormDepartment_Create(props) {
     const { handleSubmitFirebase } = props
@@ -33,73 +43,90 @@ function FormDepartment_Create(props) {
             <Grid container>
                 <Card sx={{ width: '100%', margin: '10px' }}>
                     <CardHeader
-                        titleTypographyProps={{ variant: "h5" }}
+                    style={{ backgroundColor: '#F5F5F5'}}
+                     avatar={
+                        <NoteAltIcon />
+                     }
+                        titleTypographyProps={{ 
+                            variant: "h5",
+                            align: "left"
+                        }}
                         title="Form Create Department"
-
+                        // subheader="New Department"
+                        // subheaderTypographyProps={{
+                        //     align: "center"
+                        // }}
+                        action={
+                            <div>
+                                <Button variant="contained" startIcon={<RestoreIcon />}>
+                                    Reset
+                                </Button>
+                                <Button variant="contained" startIcon={<SaveIcon />}>
+                                    Save
+                                </Button>
+                            </div>
+                        }
+                     
                     />
+
 
                     <CardContent>
                         <Grid item md={12} xs={12}
                             sx={{ paddingBottom: '15px' }}>
                             <TextField
                                 label="Kode Department"
+                                size="small"
                                 onChange={(ev) => setKodeDepartment(ev.target.value)}
                                 InputProps={{
                                     style: {
-                                        height: '55px',
                                         backgroundColor: 'white',
-                                        fontSize: 20, //when shrink     
-                                        width: 500
+                                        fontSize: 16, //when shrink     
+                                        width: 500,                    
                                     }
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        fontSize: 20, //placeholder
-
+                                        fontSize: 16, //placeholder
                                     }
                                 }}
                             />
                         </Grid>
                         <Grid item md={12} xs={12}
-                        sx={{ paddingBottom: '15px' }}>
+                            sx={{ paddingBottom: '15px' }}>
                             <TextField
                                 label="Nama Department"
+                                size="small"
                                 onChange={(ev) => setNama(ev.target.value)}
                                 InputProps={{
                                     style: {
-                                        height: '55px',
                                         backgroundColor: 'white',
-                                        fontSize: 20, //when shrink     
-                                        width: 500
+                                        fontSize: 16, //when shrink     
+                                        width: 500,                    
                                     }
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        fontSize: 20, //placeholder
-
+                                        fontSize: 16, //placeholder
                                     }
                                 }}
                             />
                         </Grid>
 
                         <Grid item md={12} xs={12}
-                        sx={{marginLeft:'3px'}}>
+                            sx={{ marginLeft: '3px' }}>
                             <FormControl component="fieldset">
                                 <FormLabel component="legend">Status Keaktifan</FormLabel>
                                 <RadioGroup
                                     aria-label="status"
                                     name="controlled-radio-buttons-group"
-                                   
                                 >
                                     <FormControlLabel value="aktif" control={<Radio />} label="Aktif" />
                                     <FormControlLabel value="tidak aktif" control={<Radio />} label="Tidak Aktif" />
                                 </RadioGroup>
                             </FormControl>
                         </Grid>
-
                     </CardContent>
                 </Card>
-
 
 
             </Grid>
