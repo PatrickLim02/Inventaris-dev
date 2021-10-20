@@ -1,7 +1,8 @@
+import { fetchDepartmentFromBackEndToRedux } from '../redux';
 import Wrap from './axiosWrapper';
 
 
-export const getDeptList = (params = {}) => {  // List Cabang
+export const getDeptList = (params = {}) => {  // List Dept
   return Wrap({
     url: '/department',
     method: 'GET',
@@ -48,8 +49,9 @@ export const deleteDepartment = (params ={}, id) =>{
   return Wrap({
     url : '/department/delete/' + id,
     method: 'GET',
-    params: {...params}
+    params: {...params},
   })
+ 
 }
 
 export const getSearchDept = (params ={}) =>{

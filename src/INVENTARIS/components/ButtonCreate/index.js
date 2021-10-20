@@ -1,19 +1,15 @@
 import { react, useState } from 'react'
-import { connect } from 'react-redux'
-import {styles} from './styles'
-import './buttonAdd.scss'
 import { Link } from 'react-router-dom'
+
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 
 function ButtonCreate(props) {
     return (
-        <div style={styles.container}>
-            <Link  {...props}>
-                <button className="btn btn1">
-                    CREATE
-                </button>
-            </Link>
-
-        </div>
+        <Button variant="outlined" startIcon={<AddIcon style={{ fontSize: '20px' }} />}
+            style={{ backgroundColor: '#26a69a', color: 'white', position: 'absolute', top: '10px', right: '25px', width: '90px', height: '30px', fontSize: '13px', marginLeft: '10px' }}>
+            Create
+        </Button>
     )
 }
 
